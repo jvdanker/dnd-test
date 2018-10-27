@@ -91,7 +91,9 @@ class Node extends Component {
                             y={e.y}
                             width="20"
                             height="20"
-                            fill="green" />
+                            fill={e.selected ? "yellow" : "green"}
+                            onClick={() => this.props.selectPort(this.props.id, e)}
+                        />
                     )
                 }
             </svg>
