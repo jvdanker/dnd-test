@@ -1,5 +1,10 @@
 const data = {
-    wires: [],
+    wires: [
+        {"from":{"component":"2","port":0},"to":{"component":"0","port":0}},
+        {"from":{"component":"2","port":0},"to":{"component":"0","port":1}},
+        {"from":{"component":"0","port":2},"to":{"component":"1","port":0}},
+        {"from":{"component":"0","port":2},"to":{"component":"1","port":1}},
+    ],
     selectedPorts: [],
     components: {
         0: {
@@ -16,6 +21,11 @@ const data = {
                     id: 1,
                     x: 290,
                     y: 190
+                },
+                {
+                    id: 2,
+                    x: 260,
+                    y: 90
                 }
             ]
         },
@@ -28,17 +38,27 @@ const data = {
                     id: 0,
                     x: 510,
                     y: 190
+                },
+                {
+                    id: 1,
+                    x: 540,
+                    y: 190
+                },
+                {
+                    id: 2,
+                    x: 510,
+                    y: 90
                 }
             ]
         },
         2: {
             type: 'SWITCH',
-            x: 200,
+            x: 250,
             y: 400,
             connectors: [
                 {
                     id: 0,
-                    x: 200,
+                    x: 250,
                     y: 370,
                 }
             ]
@@ -76,6 +96,18 @@ const data = {
                     id: 1,
                     x: 90,
                     y: 390
+                }
+            ]
+        },
+        2: {
+            type: 'SWITCH',
+            x: 50,
+            y: 500,
+            connectors: [
+                {
+                    id: 0,
+                    x: 50,
+                    y: 470,
                 }
             ]
         }

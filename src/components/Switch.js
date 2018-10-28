@@ -95,13 +95,21 @@ class Switch extends Component {
             return;
         }
 
-        this.props.switchValue(this.props.id);
+        this.props.switchValue(id);
     }
 
     render() {
         const { x, y } = this.props;
         return (
             <svg>
+                <rect
+                    x={x}
+                    y={y - 30}
+                    width="20"
+                    height="20"
+                    fill={this.props.connectors[0].value ? "red" : "green"}
+                    onClick={() => this.props.selectPort(this.props.id, this.props.connectors[0])}
+                />
                 <Rect
                     x={x}
                     y={y}
@@ -109,19 +117,6 @@ class Switch extends Component {
                     onMouseUp={this.handleMouseUp}
                     fill={this.props.value ? "red" : "blue"}
                 />
-                {
-                    this.props.connectors.map(e =>
-                        <rect
-                            key={e.id}
-                            x={e.x}
-                            y={e.y}
-                            width="20"
-                            height="20"
-                            fill={this.props.value ? "red" : "green"}
-                            onClick={() => this.props.selectPort(this.props.id, e)}
-                        />
-                    )
-                }
             </svg>
         )
     }

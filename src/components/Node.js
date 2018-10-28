@@ -105,9 +105,9 @@ class Node extends Component {
                             key={e.id}
                             x={e.x}
                             y={e.y}
-                           width="20"
+                            width="20"
                             height="20"
-                            fill={e.selected ? "yellow" : "green"}
+                            fill={e.selected ? "yellow" : e.value ? "red" : "green"}
                             onClick={() => this.props.selectPort(this.props.id, e)}
                         />
                     )

@@ -108,7 +108,8 @@ class App extends Component {
 
     switchValue(component) {
         var components = this.state.components;
-        components[component].value = !components[component].value;
+        components[component].connectors[0].value = !components[component].connectors[0].value;
+        components[component].value = components[component].connectors[0].value;
         this.setState({
             components: components
         }, this.updateModel);
@@ -116,17 +117,81 @@ class App extends Component {
     }
 
     updateModel() {
-        var wires = this.state.wires.map(w => {
-            var from = this.state.components[w.from.component];
-            var fromC = from.connectors.find(c => c.id === w.from.port);
-            var to = this.state.components[w.to.component];
-            var toC = to.connectors.find(c => c.id === w.to.port);
+        var changed = true;
+        var i = 0;
+        var components = this.state.components;
+        var wires = this.state.wires;
 
-            w.value = from.value;
-            return w;
-        });
+        while (changed) {
+            changed = false;
+            i++;
+
+            if (i > 100) {
+                alert('Error');
+                return;
+            }
+
+            for (var j=0; j<wires.length; j++) {
+                var w = wires[j];
+
+                // debugger;
+                // console.log(i, w);
+
+                var from = components[w.from.component];
+                var fromC = from.connectors.find(c => c.id === w.from.port);
+                var to = components[w.to.component];
+                var toC = to.connectors.find(c => c.id === w.to.port);
+
+                if (typeof w.value === 'undefined') {
+                    w.value = false;
+                }
+                if (typeof fromC.value === 'undefined') {
+                    fromC.value = false;
+                }
+                if (typeof toC.value === 'undefined') {
+                    toC.value = false;
+                }
+
+                if (fromC.value !== w.value) {
+                    changed = true;
+                    w.value = fromC.value;
+                }
+                if (toC.value !== w.value) {
+                    changed = true;
+                    toC.value = w.value;
+                }
+            }
+
+            for (var j=0; j<Object.keys(components).length; j++) {
+                var key = Object.keys(components)[j];
+                var c = components[key];
+
+                if (c.type === 'NODE') {
+                    var c1 = c.connectors[0];
+                    var c2 = c.connectors[1];
+                    var c3 = c.connectors[2];
+
+                    if (typeof c1.value === 'undefined') {
+                        c1.value = false;
+                    }
+                    if (typeof c2.value === 'undefined') {
+                        c2.value = false;
+                    }
+                    if (typeof c3.value === 'undefined') {
+                        c3.value = false;
+                    }
+
+                    var result = !(c1.value && c2.value);
+                    if (result !== c3.value) {
+                        changed = true;
+                        c3.value = result;
+                    }
+                }
+            }
+        }
 
         this.setState({
+            components: components,
             wires: wires
         });
     }
@@ -148,52 +213,34 @@ class App extends Component {
                         {
                             Object.keys(this.state.library).map(id => {
                                 const c = this.state.library[id];
-                                return (
-                                    <Node
-                                        key={id}
-                                        id={id}
-                                        x={c.x}
-                                        y={c.y}
-                                        connectors={c.connectors}
-                                        fill='blue'
-                                        onClick={this.addComponent}
-                                    />
-                                );
+                                switch (c.type) {
+                                    case 'NODE':
+                                        return (
+                                            <Node
+                                                key={id}
+                                                id={id}
+                                                type={c.type}
+                                                x={c.x}
+                                                y={c.y}
+                                                connectors={c.connectors}
+                                                fill='blue'
+                                                onClick={this.addComponent} />
+                                        );
+                                    case 'SWITCH':
+                                        return (
+                                            <Switch
+                                                key={id}
+                                                id={id}
+                                                type={c.type}
+                                                x={c.x}
+                                                y={c.y}
+                                                connectors={c.connectors}
+                                                fill='blue' />
+                                        );
+                                    default:
+                                        return (<svg width="1" height="1" x="0" y="0" key={id}></svg>);
+                                }
                             })
-                        }
-                        {
-                            // Object.keys(this.state.components).map(id => {
-                            //     const e = this.state.components[id];
-                            //
-                            //     if (!e.connectors) {
-                            //         return [];
-                            //     }
-                            //
-                            //     var lines = e.connectors.map((c, i) => {
-                            //         if (! (c.connections)) {
-                            //             return [];
-                            //         }
-                            //
-                            //         var lines = c.connections.map((conn, i2) => {
-                            //             var comp = this.state.components[conn.component];
-                            //             var connector = comp.connectors.find(e => {
-                            //                 return e.id === conn.connector;
-                            //             });
-                            //
-                            //             return (
-                            //                 <line
-                            //                     key={i}
-                            //                     x1={connector.x} y1={connector.y}
-                            //                     x2={c.x} y2={c.y}
-                            //                     stroke="black" />
-                            //             );
-                            //         });
-                            //
-                            //         return lines;
-                            //     });
-                            //
-                            //     return lines;
-                            // })
                         }
                         {
                             this.state.wires.map(w => {
@@ -243,7 +290,6 @@ class App extends Component {
                                                 fill='blue'
                                                 onMove={this.onMove}
                                                 selectPort={this.selectPort}
-                                                value={e.value}
                                                 switchValue={this.switchValue}
                                             />
                                         );
