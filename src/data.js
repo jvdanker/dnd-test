@@ -1,7 +1,7 @@
 const data = {
     wires: [
         {"from":{"component":"2","port":0},"to":{"component":"0","port":0}},
-        {"from":{"component":"2","port":0},"to":{"component":"0","port":1}},
+        {"from":{"component":"3","port":0},"to":{"component":"0","port":1}},
         {"from":{"component":"0","port":2},"to":{"component":"1","port":0}},
         {"from":{"component":"0","port":2},"to":{"component":"1","port":1}},
     ],
@@ -59,6 +59,18 @@ const data = {
                 {
                     id: 0,
                     x: 250,
+                    y: 370,
+                }
+            ]
+        },
+        3: {
+            type: 'SWITCH',
+            x: 350,
+            y: 400,
+            connectors: [
+                {
+                    id: 0,
+                    x: 350,
                     y: 370,
                 }
             ]
