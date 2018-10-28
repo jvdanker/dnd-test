@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Node from './components/Node';
 import Switch from './components/Switch';
 import data from './data';
+import updateModel from './Logic';
 
 import './App.css';
 
@@ -22,9 +23,9 @@ class App extends Component {
         this.addComponent = this.addComponent.bind(this);
         this.selectPort = this.selectPort.bind(this);
         this.switchValue = this.switchValue.bind(this);
-        this.updateModel = this.updateModel.bind(this);
+        // this.updateModel = this.updateModel.bind(this);
 
-        this.updateModel(true);
+        updateModel(this.state.components, this.state.wires);
     }
 
     sanitize(data) {
@@ -141,67 +142,13 @@ class App extends Component {
         components[component].value = components[component].connectors[0].value;
         this.setState({
             components: components
-        }, this.updateModel);
-
-    }
-
-    updateModel(dontSetState) {
-        var changed = true;
-        var i = 0;
-        var components = this.state.components;
-        var wires = this.state.wires;
-
-        while (changed) {
-            changed = false;
-            i++;
-
-            if (i > 100) {
-                alert('Error');
-                return;
-            }
-
-            for (var j=0; j<wires.length; j++) {
-                var w = wires[j];
-
-                var from = components[w.from.component];
-                var fromC = from.connectors.find(c => c.id === w.from.port);
-                var to = components[w.to.component];
-                var toC = to.connectors.find(c => c.id === w.to.port);
-
-                if (fromC.value !== w.value) {
-                    changed = true;
-                    w.value = fromC.value;
-                }
-                if (toC.value !== w.value) {
-                    changed = true;
-                    toC.value = w.value;
-                }
-            }
-
-            for (var j=0; j<Object.keys(components).length; j++) {
-                var key = Object.keys(components)[j];
-                var c = components[key];
-
-                if (c.type === 'NODE') {
-                    var c1 = c.connectors[0];
-                    var c2 = c.connectors[1];
-                    var c3 = c.connectors[2];
-
-                    var result = !(c1.value && c2.value);
-                    if (result !== c3.value) {
-                        changed = true;
-                        c3.value = result;
-                    }
-                }
-            }
-        }
-
-        if (!dontSetState) {
+        }, () => {
+            updateModel(this.state.components, this.state.wires);
             this.setState({
-                components: components,
-                wires: wires
+                components: this.state.components,
+                wires: this.state.wires
             });
-        }
+        });
     }
 
     render() {

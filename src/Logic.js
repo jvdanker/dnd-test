@@ -1,9 +1,7 @@
 
-function updateModel(dontSetState) {
+function updateModel(components, wires) {
     var changed = true;
     var i = 0;
-    var components = this.state.components;
-    var wires = this.state.wires;
 
     while (changed) {
         changed = false;
@@ -71,13 +69,6 @@ function updateModel(dontSetState) {
                 }
             }
         }
-    }
-
-    if (!dontSetState) {
-        this.setState({
-            components: components,
-            wires: wires
-        });
     }
 }
 
