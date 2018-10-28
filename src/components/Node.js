@@ -15,7 +15,7 @@ class Node extends Component {
         }
 
         e.preventDefault();
-        console.log('mousedown', e);
+        // console.log('mousedown', e);
 
         this.coords = {
             x: e.pageX,
@@ -31,7 +31,7 @@ class Node extends Component {
         }
 
         e.preventDefault();
-        console.log('mouseup', e);
+        // console.log('mouseup', e);
 
         document.removeEventListener('mousemove', this.handleMouseMove);
         this.coords = {};

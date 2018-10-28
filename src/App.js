@@ -23,6 +23,8 @@ class App extends Component {
         this.selectPort = this.selectPort.bind(this);
         this.switchValue = this.switchValue.bind(this);
         this.updateModel = this.updateModel.bind(this);
+
+        this.updateModel(true);
     }
 
     onMove(e) {
@@ -116,7 +118,7 @@ class App extends Component {
 
     }
 
-    updateModel() {
+    updateModel(dontSetState) {
         var changed = true;
         var i = 0;
         var components = this.state.components;
@@ -190,10 +192,12 @@ class App extends Component {
             }
         }
 
-        this.setState({
-            components: components,
-            wires: wires
-        });
+        if (!dontSetState) {
+            this.setState({
+                components: components,
+                wires: wires
+            });
+        }
     }
 
     render() {

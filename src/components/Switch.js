@@ -1,10 +1,4 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
-
-const Rect = styled.rect`
-    height: 20px;
-    width: 20px;
-`;
 
 class Switch extends Component {
 
@@ -21,7 +15,7 @@ class Switch extends Component {
         }
 
         e.preventDefault();
-        console.log('mousedown', e);
+        // console.log('mousedown', e);
 
         this.coords = {
             x: e.pageX,
@@ -38,7 +32,7 @@ class Switch extends Component {
         }
 
         e.preventDefault();
-        console.log('mouseup', e);
+        // console.log('mouseup', e);
 
         if (! this.dragging) {
             this.switchValue(this.props.id);
@@ -110,9 +104,11 @@ class Switch extends Component {
                     fill={this.props.connectors[0].value ? "red" : "green"}
                     onClick={() => this.props.selectPort(this.props.id, this.props.connectors[0])}
                 />
-                <Rect
+                <rect
                     x={x}
                     y={y}
+                    width="20"
+                    height="20"
                     onMouseDown={this.handleMouseDown}
                     onMouseUp={this.handleMouseUp}
                     fill={this.props.value ? "red" : "blue"}
