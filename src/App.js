@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 import Node from './components/Node';
+import Switch from './components/Switch';
+import data from './data';
 
 import './App.css';
 
@@ -14,79 +16,13 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            selectedPorts: [],
-            components: {
-                0: {
-                    x: 250,
-                    y: 100,
-                    connectors: [
-                        {
-                            id: 0,
-                            x: 260,
-                            y: 190,
-                            connections: [
-                                {component: 1, connector: 0}
-                            ]
-                        },
-                        {
-                            id: 1,
-                            x: 290,
-                            y: 190
-                        }
-                    ]
-                },
-                1: {
-                    x: 500,
-                    y: 100,
-                    connectors: [
-                        {
-                            id: 0,
-                            x: 510,
-                            y: 190
-                        }
-                    ]
-                }
-            },
-            library: {
-                0: {
-                    x: 50,
-                    y: 100,
-                    connectors: [
-                        {
-                            id: 0,
-                            x: 60,
-                            y: 190
-                        },
-                        {
-                            id: 1,
-                            x: 90,
-                            y: 190
-                        }
-                    ]
-                },
-                1: {
-                    x: 50,
-                    y: 300,
-                    connectors: [
-                        {
-                            id: 0,
-                            x: 60,
-                            y: 390
-                        },
-                        {
-                            id: 1,
-                            x: 90,
-                            y: 390
-                        }
-                    ]
-                }
-            }
-        };
+        this.state = data;
 
         this.onMove = this.onMove.bind(this);
         this.addComponent = this.addComponent.bind(this);
         this.selectPort = this.selectPort.bind(this);
+        this.switchValue = this.switchValue.bind(this);
+        this.updateModel = this.updateModel.bind(this);
     }
 
     onMove(e) {
@@ -119,7 +55,6 @@ class App extends Component {
 
     selectPort(component, port) {
         port.selected = !port.selected;
-        console.log(component, port);
 
         var selectedPorts = this.state.selectedPorts;
         if (port.selected) {
@@ -132,6 +67,7 @@ class App extends Component {
         }
 
         var components = this.state.components;
+        var wires = this.state.wires;
         if (selectedPorts.length === 2) {
             var from = components[selectedPorts[0].component];
             var fromConnector = from.connectors.find((e) => {
@@ -147,13 +83,51 @@ class App extends Component {
                 connector: selectedPorts[1].port.id
             });
 
+            wires.push({
+                from: {
+                    component: selectedPorts[0].component,
+                    port: selectedPorts[0].port.id
+                },
+                to: {
+                    component: selectedPorts[1].component,
+                    port: selectedPorts[1].port.id
+                }
+            });
+
             selectedPorts = [];
+            fromConnector.selected = false;
             port.selected = false;
         }
 
         this.setState({
+            wires: wires,
             selectedPorts: selectedPorts,
             components: components
+        });
+    }
+
+    switchValue(component) {
+        var components = this.state.components;
+        components[component].value = !components[component].value;
+        this.setState({
+            components: components
+        }, this.updateModel);
+
+    }
+
+    updateModel() {
+        var wires = this.state.wires.map(w => {
+            var from = this.state.components[w.from.component];
+            var fromC = from.connectors.find(c => c.id === w.from.port);
+            var to = this.state.components[w.to.component];
+            var toC = to.connectors.find(c => c.id === w.to.port);
+
+            w.value = from.value;
+            return w;
+        });
+
+        this.setState({
+            wires: wires
         });
     }
 
@@ -164,8 +138,13 @@ class App extends Component {
                     test
                 </header>
                 <main>
-                    <div onClick={(e) => console.log(e)}>laksdjf</div>
                     <Svg>
+                        <line
+                            x1="200" y1="0"
+                            x2="200" y2="100%"
+                            stroke="black"
+                        />
+
                         {
                             Object.keys(this.state.library).map(id => {
                                 const c = this.state.library[id];
@@ -183,54 +162,100 @@ class App extends Component {
                             })
                         }
                         {
-                            Object.keys(this.state.components).map(id => {
-                                const e = this.state.components[id];
-                                var lines = e.connectors.map((c, i) => {
-                                    if (! (c.connections)) {
-                                        return [];
-                                    }
+                            // Object.keys(this.state.components).map(id => {
+                            //     const e = this.state.components[id];
+                            //
+                            //     if (!e.connectors) {
+                            //         return [];
+                            //     }
+                            //
+                            //     var lines = e.connectors.map((c, i) => {
+                            //         if (! (c.connections)) {
+                            //             return [];
+                            //         }
+                            //
+                            //         var lines = c.connections.map((conn, i2) => {
+                            //             var comp = this.state.components[conn.component];
+                            //             var connector = comp.connectors.find(e => {
+                            //                 return e.id === conn.connector;
+                            //             });
+                            //
+                            //             return (
+                            //                 <line
+                            //                     key={i}
+                            //                     x1={connector.x} y1={connector.y}
+                            //                     x2={c.x} y2={c.y}
+                            //                     stroke="black" />
+                            //             );
+                            //         });
+                            //
+                            //         return lines;
+                            //     });
+                            //
+                            //     return lines;
+                            // })
+                        }
+                        {
+                            this.state.wires.map(w => {
+                                var from = this.state.components[w.from.component];
+                                var fromC = from.connectors.find(c => c.id === w.from.port);
+                                var to = this.state.components[w.to.component];
+                                var toC = to.connectors.find(c => c.id === w.to.port);
 
-                                    var lines = c.connections.map((conn, i2) => {
-                                        var comp = this.state.components[conn.component];
-                                        var connector = comp.connectors.find(e => {
-                                            return e.id === conn.connector;
-                                        });
-
-                                        return (
-                                            <line
-                                                key={i}
-                                                x1={connector.x} y1={connector.y}
-                                                x2={c.x} y2={c.y}
-                                                stroke="black" />
-                                        );
-                                    });
-
-                                    return lines;
-                                });
-
-                                return lines;
+                                return (
+                                    <line
+                                        key={w.from.component + '-' + w.from.port + ':' + w.to.component + '-' + w.to.port}
+                                        x1={fromC.x} y1={fromC.y}
+                                        x2={toC.x} y2={toC.y}
+                                        stroke={w.value ? "red" : "black"}
+                                    />
+                                );
                             })
                         }
                         {
                             Object.keys(this.state.components).map(id => {
                                 const e = this.state.components[id];
-                                return (
-                                    <Node
-                                        key={id}
-                                        id={id}
-                                        x={e.x}
-                                        y={e.y}
-                                        connectors={e.connectors}
-                                        selected={e.selected}
-                                        fill='blue'
-                                        onMove={this.onMove}
-                                        selectPort={this.selectPort}/>
-                                );
+                                switch (e.type) {
+                                    case 'NODE':
+                                        return (
+                                            <Node
+                                                key={id}
+                                                id={id}
+                                                type={e.type}
+                                                x={e.x}
+                                                y={e.y}
+                                                connectors={e.connectors}
+                                                selected={e.selected}
+                                                fill='blue'
+                                                onMove={this.onMove}
+                                                selectPort={this.selectPort} />
+                                        );
+                                    case 'SWITCH':
+                                        return (
+                                            <Switch
+                                                key={id}
+                                                id={id}
+                                                type={e.type}
+                                                x={e.x}
+                                                y={e.y}
+                                                connectors={e.connectors}
+                                                selected={e.selected}
+                                                fill='blue'
+                                                onMove={this.onMove}
+                                                selectPort={this.selectPort}
+                                                value={e.value}
+                                                switchValue={this.switchValue}
+                                            />
+                                        );
+                                    default:
+                                        return (<svg width="1" height="1" x="0" y="0" key={id}></svg>);
+                                }
                             })
                         }
                     </Svg>
                     <div>
-                        <pre>{JSON.stringify(this.state)}</pre>
+                        <pre>{JSON.stringify(this.state.wires)}</pre>
+                        <pre>{JSON.stringify(this.state.components)}</pre>
                     </div>
                 </main>
             </div>

@@ -2,12 +2,18 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 const Rect = styled.rect`
-    fill: blue;
-    height: 100px;
-    width: 100px;
+    height: 20px;
+    width: 20px;
 `;
 
-class Node extends Component {
+class Switch extends Component {
+
+    constructor(props) {
+        super(props);
+        this.dragging = false;
+
+        this.switchValue = this.switchValue.bind(this);
+    }
 
     handleMouseDown = (e) => {
         if (! (this.props.onMove)) {
@@ -22,6 +28,7 @@ class Node extends Component {
             y: e.pageY
         };
 
+        this.dragging = false;
         document.addEventListener('mousemove', this.handleMouseMove);
     };
 
@@ -33,7 +40,12 @@ class Node extends Component {
         e.preventDefault();
         console.log('mouseup', e);
 
+        if (! this.dragging) {
+            this.switchValue(this.props.id);
+        }
+
         document.removeEventListener('mousemove', this.handleMouseMove);
+        this.dragging = false;
         this.coords = {};
     };
 
@@ -62,8 +74,8 @@ class Node extends Component {
 
         var connectors = this.props.connectors;
         connectors.forEach((e, i) => {
-            e.x = nx + 10 + (i * 30);
-            e.y = ny + 90;
+            e.x = nx + (i * 30);
+            e.y = ny - 30;
         });
 
         const evt = {
@@ -74,40 +86,38 @@ class Node extends Component {
             connectors: connectors
         };
 
+        this.dragging = true;
         this.props.onMove(evt);
     };
+
+    switchValue(id) {
+        if (this.dragging) {
+            return;
+        }
+
+        this.props.switchValue(this.props.id);
+    }
 
     render() {
         const { x, y } = this.props;
         return (
             <svg>
-                {
-                    this.props.onMove ?
-                        <Rect
-                            x={x}
-                            y={y}
-                            onMouseDown={this.handleMouseDown}
-                            onMouseUp={this.handleMouseUp}
-                        /> : null
-                }
-                {
-                    !this.props.onMove ?
-                        <Rect
-                            x={x}
-                            y={y}
-                            onClick={() => this.props.onClick(this.props.id)}
-                        /> : null
-                }
-
+                <Rect
+                    x={x}
+                    y={y}
+                    onMouseDown={this.handleMouseDown}
+                    onMouseUp={this.handleMouseUp}
+                    fill={this.props.value ? "red" : "blue"}
+                />
                 {
                     this.props.connectors.map(e =>
                         <rect
                             key={e.id}
                             x={e.x}
                             y={e.y}
-                           width="20"
+                            width="20"
                             height="20"
-                            fill={e.selected ? "yellow" : "green"}
+                            fill={this.props.value ? "red" : "green"}
                             onClick={() => this.props.selectPort(this.props.id, e)}
                         />
                     )
@@ -117,4 +127,4 @@ class Node extends Component {
     }
 }
 
-export default Node;
+export default Switch;
