@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-import Node from './components/Node';
-import Switch from './components/Switch';
+import Wires from './components/Wires';
+import Components from './components/Components';
+import Library from './components/Library';
+
 import data from './data';
 import updateModel from './Logic';
 
@@ -166,89 +168,15 @@ class App extends Component {
                             x2="200" y2="100%"
                             stroke="black"
                         />
-
-                        {
-                            Object.keys(this.state.library).map(id => {
-                                const c = this.state.library[id];
-                                switch (c.type) {
-                                    case 'NODE':
-                                        return (
-                                            <Node
-                                                key={id}
-                                                id={id}
-                                                type={c.type}
-                                                x={c.x}
-                                                y={c.y}
-                                                connectors={c.connectors}
-                                                fill='blue'
-                                                onClick={this.addComponent} />
-                                        );
-                                    case 'SWITCH':
-                                        return (
-                                            <Switch
-                                                key={id}
-                                                id={id}
-                                                type={c.type}
-                                                x={c.x}
-                                                y={c.y}
-                                                connectors={c.connectors}
-                                                fill='blue' />
-                                        );
-                                    default:
-                                        return (<svg width="1" height="1" x="0" y="0" key={id}></svg>);
-                                }
-                            })
-                        }
-                        {
-                            this.state.wires.map(w => {
-                                var from = this.state.components[w.from.component];
-                                var fromC = from.connectors.find(c => c.id === w.from.port);
-                                var to = this.state.components[w.to.component];
-                                var toC = to.connectors.find(c => c.id === w.to.port);
-
-                                return (
-                                    <line
-                                        key={w.from.component + '-' + w.from.port + ':' + w.to.component + '-' + w.to.port}
-                                        x1={from.x + fromC.x} y1={from.y + fromC.y}
-                                        x2={to.x + toC.x} y2={to.y + toC.y}
-                                        stroke={w.value ? "red" : "black"}
-                                    />
-                                );
-                            })
-                        }
-                        {
-                            Object.keys(this.state.components).map(id => {
-                                const e = this.state.components[id];
-                                switch (e.type) {
-                                    case 'NODE':
-                                        return (
-                                            <Node
-                                                key={id}
-                                                id={id}
-                                                x={e.x}
-                                                y={e.y}
-                                                connectors={e.connectors}
-                                                onMove={this.onMove}
-                                                selectPort={this.selectPort} />
-                                        );
-                                    case 'SWITCH':
-                                        return (
-                                            <Switch
-                                                key={id}
-                                                id={id}
-                                                x={e.x}
-                                                y={e.y}
-                                                connectors={e.connectors}
-                                                onMove={this.onMove}
-                                                selectPort={this.selectPort}
-                                                switchValue={this.switchValue}
-                                            />
-                                        );
-                                    default:
-                                        return (<svg width="1" height="1" x="0" y="0" key={id}></svg>);
-                                }
-                            })
-                        }
+                        <Library library={this.state.library} />
+                        <Wires wires={this.state.wires} components={this.state.components} />
+                        <Components
+                            wires={this.state.wires}
+                            components={this.state.components}
+                            onMove={this.onMove}
+                            selectPort={this.selectPort}
+                            switchValue={this.switchValue}
+                        />
                     </Svg>
                     <div>
                         <pre>{JSON.stringify(this.state.wires)}</pre>
