@@ -23,16 +23,6 @@ function updateModel(components, wires) {
             var to = components[w.to.component];
             var toC = to.connectors.find(c => c.id === w.to.port);
 
-            if (typeof w.value === 'undefined') {
-                w.value = false;
-            }
-            if (typeof fromC.value === 'undefined') {
-                fromC.value = false;
-            }
-            if (typeof toC.value === 'undefined') {
-                toC.value = false;
-            }
-
             if (fromC.value !== w.value) {
                 changed = true;
                 w.value = fromC.value;
@@ -52,20 +42,12 @@ function updateModel(components, wires) {
                 var c2 = c.connectors[1];
                 var c3 = c.connectors[2];
 
-                if (typeof c1.value === 'undefined') {
-                    c1.value = false;
-                }
-                if (typeof c2.value === 'undefined') {
-                    c2.value = false;
-                }
-                if (typeof c3.value === 'undefined') {
-                    c3.value = false;
-                }
-
-                var result = !(c1.value && c2.value);
-                if (result !== c3.value) {
-                    changed = true;
-                    c3.value = result;
+                if (c1 && c2 && c3) {
+                    var result = !(c1.value && c2.value);
+                    if (result !== c3.value) {
+                        changed = true;
+                        c3.value = result;
+                    }
                 }
             }
         }

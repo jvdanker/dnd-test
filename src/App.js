@@ -23,7 +23,6 @@ class App extends Component {
         this.addComponent = this.addComponent.bind(this);
         this.selectPort = this.selectPort.bind(this);
         this.switchValue = this.switchValue.bind(this);
-        // this.updateModel = this.updateModel.bind(this);
 
         updateModel(this.state.components, this.state.wires);
     }
@@ -207,8 +206,8 @@ class App extends Component {
                                 return (
                                     <line
                                         key={w.from.component + '-' + w.from.port + ':' + w.to.component + '-' + w.to.port}
-                                        x1={fromC.x} y1={fromC.y}
-                                        x2={toC.x} y2={toC.y}
+                                        x1={from.x + fromC.x} y1={from.y + fromC.y}
+                                        x2={to.x + toC.x} y2={to.y + toC.y}
                                         stroke={w.value ? "red" : "black"}
                                     />
                                 );

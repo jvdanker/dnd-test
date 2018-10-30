@@ -1,4 +1,6 @@
 const data = {
+    x: 500,
+    y: 50,
     wires: [
         {"from":{"component":"2","port":0},"to":{"component":"0","port":0}},
         {"from":{"component":"3","port":0},"to":{"component":"0","port":1}},
@@ -14,18 +16,18 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 260,
-                    y: 190
+                    x: 10,
+                    y: 90
                 },
                 {
                     id: 1,
-                    x: 290,
-                    y: 190
+                    x: 40,
+                    y: 90
                 },
                 {
                     id: 2,
-                    x: 260,
-                    y: 90
+                    x: 10,
+                    y: 0
                 }
             ]
         },
@@ -36,18 +38,18 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 510,
-                    y: 190
+                    x: 10,
+                    y: 90
                 },
                 {
                     id: 1,
-                    x: 540,
-                    y: 190
+                    x: 40,
+                    y: 90
                 },
                 {
                     id: 2,
-                    x: 510,
-                    y: 90
+                    x: 10,
+                    y: 0
                 }
             ]
         },
@@ -58,8 +60,8 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 250,
-                    y: 370,
+                    x: 0,
+                    y: 0,
                 }
             ]
         },
@@ -70,8 +72,8 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 350,
-                    y: 370,
+                    x: 0,
+                    y: 0,
                 }
             ]
         }
@@ -84,42 +86,30 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 60,
-                    y: 190
+                    x: 10,
+                    y: 90
                 },
                 {
                     id: 1,
-                    x: 90,
-                    y: 190
+                    x: 40,
+                    y: 90
+                },
+                {
+                    id: 2,
+                    x: 10,
+                    y: 0
                 }
             ]
         },
         1: {
-            type: 'NODE',
+            type: 'SWITCH',
             x: 50,
             y: 300,
             connectors: [
                 {
                     id: 0,
-                    x: 60,
-                    y: 390
-                },
-                {
-                    id: 1,
-                    x: 90,
-                    y: 390
-                }
-            ]
-        },
-        2: {
-            type: 'SWITCH',
-            x: 50,
-            y: 500,
-            connectors: [
-                {
-                    id: 0,
-                    x: 50,
-                    y: 470,
+                    x: 0,
+                    y: 0,
                 }
             ]
         }

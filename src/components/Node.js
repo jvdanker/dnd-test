@@ -62,8 +62,8 @@ class Node extends Component {
 
         var connectors = this.props.connectors;
         connectors.forEach((e, i) => {
-            e.x = nx + 10 + (i * 30);
-            e.y = ny + 90;
+            // e.x = nx + 10 + (i * 30);
+            // e.y = ny + 90;
         });
 
         const evt = {
@@ -80,25 +80,25 @@ class Node extends Component {
     render() {
         const { x, y } = this.props;
         return (
-            <svg>
+            <g
+                viewBox="0 0 100 100"
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
+                transform={"translate(" + x + "," + y + ")"}>>
                 {
-                    this.props.onMove ?
-                        <Rect
-                            x={x}
-                            y={y}
-                            onMouseDown={this.handleMouseDown}
-                            onMouseUp={this.handleMouseUp}
-                        /> : null
+                    <rect
+                        x="0"
+                        y="10"
+                        width="90"
+                        height="90"
+                        fill="blue"
+                        onClick={() => {
+                            if (!this.props.onMove) {
+                                this.props.onClick(this.props.id)
+                            }
+                        }}
+                    />
                 }
-                {
-                    !this.props.onMove ?
-                        <Rect
-                            x={x}
-                            y={y}
-                            onClick={() => this.props.onClick(this.props.id)}
-                        /> : null
-                }
-
                 {
                     this.props.connectors.map(e =>
                         <rect
@@ -112,7 +112,7 @@ class Node extends Component {
                         />
                     )
                 }
-            </svg>
+            </g>
         )
     }
 }

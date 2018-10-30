@@ -50,13 +50,6 @@ class Switch extends Component {
         var px = e.pageX;
         var py = e.pageY;
 
-        if (px  < 200) {
-            px = 200;
-        }
-        if (py < 0) {
-            py = 0;
-        }
-
         const xDiff = this.coords.x - px;
         const yDiff = this.coords.y - py;
 
@@ -68,8 +61,8 @@ class Switch extends Component {
 
         var connectors = this.props.connectors;
         connectors.forEach((e, i) => {
-            e.x = nx + (i * 30);
-            e.y = ny - 30;
+            // e.x = nx + (i * 30);
+            // e.y = ny;
         });
 
         const evt = {
@@ -95,25 +88,27 @@ class Switch extends Component {
     render() {
         const { x, y } = this.props;
         return (
-            <svg>
+            <g
+                viewBox="0 0 50 50"
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
+                transform={"translate(" + x + "," + y + ")"}>
                 <rect
-                    x={x}
-                    y={y - 30}
+                    x="0"
+                    y="0"
                     width="20"
                     height="20"
                     fill={this.props.connectors[0].value ? "red" : "green"}
                     onClick={() => this.props.selectPort(this.props.id, this.props.connectors[0])}
                 />
                 <rect
-                    x={x}
-                    y={y}
+                    x="0"
+                    y="30"
                     width="20"
                     height="20"
-                    onMouseDown={this.handleMouseDown}
-                    onMouseUp={this.handleMouseUp}
                     fill={this.props.value ? "red" : "blue"}
                 />
-            </svg>
+            </g>
         )
     }
 }
