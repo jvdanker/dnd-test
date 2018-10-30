@@ -1,98 +1,12 @@
 import React, {Component} from 'react';
 
+import Moveable from './Moveable';
+
 class Switch extends Component {
 
-    constructor(props) {
-        super(props);
-        this.dragging = false;
-
-        this.switchValue = this.switchValue.bind(this);
-    }
-
-    handleMouseDown = (e) => {
-        if (! (this.props.onMove)) {
-            return;
-        }
-
-        e.preventDefault();
-        // console.log('mousedown', e);
-
-        this.coords = {
-            x: e.pageX,
-            y: e.pageY
-        };
-
-        this.dragging = false;
-        document.addEventListener('mousemove', this.handleMouseMove);
-    };
-
-    handleMouseUp = (e) => {
-        if (! (this.props.onMove)) {
-            return;
-        }
-
-        e.preventDefault();
-        // console.log('mouseup', e);
-
-        if (! this.dragging) {
-            this.switchValue(this.props.id);
-        }
-
-        document.removeEventListener('mousemove', this.handleMouseMove);
-        this.dragging = false;
-        this.coords = {};
-    };
-
-    handleMouseMove = (e) => {
-        e.preventDefault();
-        // console.log('mousemove', e, this.state.refs);
-
-        var px = e.pageX;
-        var py = e.pageY;
-
-        const xDiff = this.coords.x - px;
-        const yDiff = this.coords.y - py;
-
-        var nx = this.props.x - xDiff;
-        var ny = this.props.y - yDiff;
-
-        this.coords.x = px;
-        this.coords.y = py;
-
-        var connectors = this.props.connectors;
-        connectors.forEach((e, i) => {
-            // e.x = nx + (i * 30);
-            // e.y = ny;
-        });
-
-        const evt = {
-            type: this.props.type,
-            id: this.props.id,
-            x: nx,
-            y: ny,
-            connectors: connectors
-        };
-
-        this.dragging = true;
-        this.props.onMove(evt);
-    };
-
-    switchValue(id) {
-        if (this.dragging) {
-            return;
-        }
-
-        this.props.switchValue(id);
-    }
-
     render() {
-        const { x, y } = this.props;
         return (
-            <g
-                viewBox="0 0 50 50"
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
-                transform={"translate(" + x + "," + y + ")"}>
+            <g>
                 <rect
                     x="0"
                     y="0"
@@ -113,4 +27,4 @@ class Switch extends Component {
     }
 }
 
-export default Switch;
+export default Moveable(Switch);
