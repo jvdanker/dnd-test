@@ -174,7 +174,6 @@ class App extends Component {
                             wires={this.state.wires}
                             components={this.state.components} />
                         <Components
-                            wires={this.state.wires}
                             components={this.state.components}
                             onMove={this.onMove}
                             selectPort={this.selectPort}
