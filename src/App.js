@@ -168,8 +168,11 @@ class App extends Component {
                             x2="200" y2="100%"
                             stroke="black"
                         />
-                        <Library library={this.state.library} />
-                        <Wires wires={this.state.wires} components={this.state.components} />
+                        <Library
+                            library={this.state.library} />
+                        <Wires
+                            wires={this.state.wires}
+                            components={this.state.components} />
                         <Components
                             wires={this.state.wires}
                             components={this.state.components}

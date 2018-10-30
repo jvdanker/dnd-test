@@ -23,7 +23,6 @@ class Components extends React.Component {
                                         onMove={this.props.onMove}
                                         selectPort={this.props.selectPort}/>
                                 );
-                                break;
                             case 'SWITCH':
                                 return (
                                     <Switch
@@ -37,7 +36,6 @@ class Components extends React.Component {
                                         switchValue={this.props.switchValue}
                                     />
                                 );
-                                break;
                             default:
                                 return (
                                     <svg width="1" height="1" x="0" y="0" key={id}></svg>

@@ -12,12 +12,8 @@ function updateModel(components, wires) {
             return;
         }
 
-        for (var j=0; j<wires.length; j++) {
+        for (let j=0; j<wires.length; j++) {
             var w = wires[j];
-
-            // debugger;
-            // console.log(i, w);
-
             var from = components[w.from.component];
             var fromC = from.connectors.find(c => c.id === w.from.port);
             var to = components[w.to.component];
@@ -33,7 +29,7 @@ function updateModel(components, wires) {
             }
         }
 
-        for (var j=0; j<Object.keys(components).length; j++) {
+        for (let j=0; j<Object.keys(components).length; j++) {
             var key = Object.keys(components)[j];
             var c = components[key];
 
