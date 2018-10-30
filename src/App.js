@@ -56,7 +56,10 @@ class App extends Component {
 
     onMove(e) {
         const components = this.state.components;
-        components[e.id] = e;
+        const component = components[e.id];
+        component.x = e.x;
+        component.y = e.y;
+
         this.setState({
             components: components
         });
@@ -222,12 +225,9 @@ class App extends Component {
                                             <Node
                                                 key={id}
                                                 id={id}
-                                                type={e.type}
                                                 x={e.x}
                                                 y={e.y}
                                                 connectors={e.connectors}
-                                                selected={e.selected}
-                                                fill='blue'
                                                 onMove={this.onMove}
                                                 selectPort={this.selectPort} />
                                         );
@@ -236,12 +236,10 @@ class App extends Component {
                                             <Switch
                                                 key={id}
                                                 id={id}
-                                                type={e.type}
                                                 x={e.x}
                                                 y={e.y}
                                                 connectors={e.connectors}
                                                 selected={e.selected}
-                                                fill='blue'
                                                 onMove={this.onMove}
                                                 selectPort={this.selectPort}
                                                 switchValue={this.switchValue}

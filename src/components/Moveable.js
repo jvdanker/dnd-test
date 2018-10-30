@@ -30,11 +30,9 @@ function Moveable(WrappedComponent) {
             this.coords.y = py;
 
             const evt = {
-                type: this.props.type,
                 id: this.props.id,
                 x: nx,
                 y: ny,
-                connectors: this.props.connectors
             };
 
             this.props.onMove(evt);
