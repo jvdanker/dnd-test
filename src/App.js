@@ -172,9 +172,11 @@ class App extends Component {
                             library={this.state.library} />
                         <Wires
                             wires={this.state.wires}
-                            components={this.state.components} />
+                            components={this.state.components}
+                            library={this.state.library}/>
                         <Components
                             components={this.state.components}
+                            library={this.state.library}/>
                             onMove={this.onMove}
                             selectPort={this.selectPort}
                             switchValue={this.switchValue}

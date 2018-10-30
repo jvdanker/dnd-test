@@ -4,9 +4,12 @@ class Wires extends React.Component {
     render() {
         const wires = this.props.wires.map(w => {
             var from = this.props.components[w.from.component];
-            var fromC = from.connectors.find(c => c.id === w.from.port);
+            var fromLib = this.component(from.type);
+            var fromC = fromLib.connectors.find(c => c.id === w.from.port);
+
             var to = this.props.components[w.to.component];
-            var toC = to.connectors.find(c => c.id === w.to.port);
+            var toLib = this.component(to.type);
+            var toC = toLib.connectors.find(c => c.id === w.to.port);
 
             return (
                 <line
@@ -19,6 +22,16 @@ class Wires extends React.Component {
         });
 
         return wires;
+    }
+
+    component(type) {
+        var key = Object.keys(this.props.library).find(e => {
+            var component = this.props.library[e];
+            if (component.type === type) {
+                return component;
+            }
+        });
+        return this.props.library[key];
     }
 }
 

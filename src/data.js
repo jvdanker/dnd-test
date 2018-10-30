@@ -60,8 +60,6 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 0,
-                    y: 0,
                 }
             ]
         },
@@ -72,8 +70,6 @@ const data = {
             connectors: [
                 {
                     id: 0,
-                    x: 0,
-                    y: 0,
                 }
             ]
         }

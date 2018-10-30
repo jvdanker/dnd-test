@@ -30,6 +30,16 @@ class Node extends Component {
             </g>
         )
     }
+
+    component(type) {
+        var key = Object.keys(this.props.library).find(e => {
+            var component = this.props.library[e];
+            if (component.type === type) {
+                return component;
+            }
+        });
+        return this.props.library[key];
+    }
 }
 
 export default Moveable(Node);
