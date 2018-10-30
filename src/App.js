@@ -138,10 +138,10 @@ class App extends Component {
         });
     }
 
-    switchValue(component) {
+    switchValue(id) {
         var components = this.state.components;
-        components[component].connectors[0].value = !components[component].connectors[0].value;
-        components[component].value = components[component].connectors[0].value;
+        components[id].connectors[0].value = !components[id].connectors[0].value;
+
         this.setState({
             components: components
         }, () => {
@@ -239,7 +239,6 @@ class App extends Component {
                                                 x={e.x}
                                                 y={e.y}
                                                 connectors={e.connectors}
-                                                selected={e.selected}
                                                 onMove={this.onMove}
                                                 selectPort={this.selectPort}
                                                 switchValue={this.switchValue}
