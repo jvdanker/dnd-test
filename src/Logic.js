@@ -51,7 +51,7 @@ function updateModel(state) {
     }
 }
 
-function findLib(library, type) {
+export function findLib(library, type) {
     var key = Object.keys(library).find(e => {
         var component = library[e];
         if (component.type === type) {

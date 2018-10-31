@@ -2,6 +2,7 @@ import React from 'react';
 
 import Node from './Node';
 import Switch from './Switch';
+import {findLib} from '../Logic';
 
 class Components extends React.Component {
 
@@ -11,10 +12,7 @@ class Components extends React.Component {
                 {
                     Object.keys(this.props.components).map(id => {
                         const e = this.props.components[id];
-                        console.log(e);
-
-                        var lib = this.component(e.type);
-                        console.log(lib);
+                        var lib = findLib(this.props.library, e.type);
 
                         switch (e.type) {
                             case 'NODE':
@@ -51,19 +49,6 @@ class Components extends React.Component {
                 }
             </g>
         );
-    }
-
-    component(type) {
-        var key = Object.keys(this.props.library).find(e => {
-            var component = this.props.library[e];
-            if (component.type === type) {
-                return component;
-            }
-
-            return null;
-        });
-
-        return this.props.library[key];
     }
 }
 

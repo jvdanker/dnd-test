@@ -6,7 +6,7 @@ import Components from './components/Components';
 import Library from './components/Library';
 
 import data from './data';
-import updateModel from './Logic';
+import updateModel, {findLib} from './Logic';
 
 import './App.css';
 
@@ -27,12 +27,13 @@ class App extends Component {
         this.switchValue = this.switchValue.bind(this);
 
         updateModel(this.state);
+        console.log(findLib);
     }
 
     sanitize(data) {
         var components = Object.keys(data.components).map(key => {
             var c = data.components[key];
-            var lib = this.component(data, c.type);
+            var lib = findLib(data.library, c.type);
 
             if (typeof c.values === 'undefined') {
                 c.values = new Array(Object.keys(lib.connectors).length);
@@ -46,21 +47,7 @@ class App extends Component {
         });
         data.components = components;
 
-        console.log(data);
         return data;
-    }
-
-    component(data, type) {
-        var key = Object.keys(data.library).find(e => {
-            var component = data.library[e];
-            if (component.type === type) {
-                return component;
-            }
-
-            return null;
-        });
-
-        return data.library[key];
     }
 
     onMove(e) {

@@ -1,15 +1,17 @@
 import React from 'react';
 
+import {findLib} from '../Logic';
+
 class Wires extends React.Component {
     render() {
         const wires = this.props.wires.map(w => {
             var from = this.props.components[w.from.component];
             var fromV = from.values[w.from.port];
-            var fromLib = this.component(from.type);
+            var fromLib = findLib(this.props.library, from.type);
             var fromC = fromLib.connectors.find(c => c.id === w.from.port);
 
             var to = this.props.components[w.to.component];
-            var toLib = this.component(to.type);
+            var toLib = findLib(this.props.library, to.type);
             var toC = toLib.connectors.find(c => c.id === w.to.port);
 
             return (
@@ -23,19 +25,6 @@ class Wires extends React.Component {
         });
 
         return wires;
-    }
-
-    component(type) {
-        var key = Object.keys(this.props.library).find(e => {
-            var component = this.props.library[e];
-            if (component.type === type) {
-                return component;
-            }
-
-            return null;
-        });
-
-        return this.props.library[key];
     }
 }
 
