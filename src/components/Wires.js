@@ -4,6 +4,7 @@ class Wires extends React.Component {
     render() {
         const wires = this.props.wires.map(w => {
             var from = this.props.components[w.from.component];
+            var fromV = from.values[w.from.port];
             var fromLib = this.component(from.type);
             var fromC = fromLib.connectors.find(c => c.id === w.from.port);
 
@@ -16,7 +17,7 @@ class Wires extends React.Component {
                     key={w.from.component + '-' + w.from.port + ':' + w.to.component + '-' + w.to.port}
                     x1={from.x + fromC.x} y1={from.y + fromC.y}
                     x2={to.x + toC.x} y2={to.y + toC.y}
-                    stroke={w.value ? "red" : "black"}
+                    stroke={fromV ? "red" : "black"}
                 />
             );
         });
@@ -30,7 +31,10 @@ class Wires extends React.Component {
             if (component.type === type) {
                 return component;
             }
+
+            return null;
         });
+
         return this.props.library[key];
     }
 }

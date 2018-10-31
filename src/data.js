@@ -13,65 +13,21 @@ const data = {
             type: 'NODE',
             x: 250,
             y: 100,
-            connectors: [
-                {
-                    id: 0,
-                    x: 10,
-                    y: 90
-                },
-                {
-                    id: 1,
-                    x: 40,
-                    y: 90
-                },
-                {
-                    id: 2,
-                    x: 10,
-                    y: 0
-                }
-            ]
         },
         1: {
             type: 'NODE',
             x: 500,
             y: 100,
-            connectors: [
-                {
-                    id: 0,
-                    x: 10,
-                    y: 90
-                },
-                {
-                    id: 1,
-                    x: 40,
-                    y: 90
-                },
-                {
-                    id: 2,
-                    x: 10,
-                    y: 0
-                }
-            ]
         },
         2: {
             type: 'SWITCH',
             x: 250,
             y: 400,
-            connectors: [
-                {
-                    id: 0,
-                }
-            ]
         },
         3: {
             type: 'SWITCH',
             x: 350,
             y: 400,
-            connectors: [
-                {
-                    id: 0,
-                }
-            ]
         }
     },
     library: {

@@ -26,34 +26,41 @@ class App extends Component {
         this.selectPort = this.selectPort.bind(this);
         this.switchValue = this.switchValue.bind(this);
 
-        updateModel(this.state.components, this.state.wires);
+        updateModel(this.state);
     }
 
     sanitize(data) {
-        var wires = data.wires.map(w => {
-            if (typeof w.value === 'undefined') {
-                w.value = false;
-            }
-
-            return w;
-        });
-        data.wires = wires;
-
         var components = Object.keys(data.components).map(key => {
             var c = data.components[key];
+            var lib = this.component(data, c.type);
 
-            for (var i=0; i<c.connectors.length; i++) {
-                var conn = c.connectors[i];
-                if (typeof conn.value === 'undefined') {
-                    conn.value = false;
-                }
+            if (typeof c.values === 'undefined') {
+                c.values = new Array(Object.keys(lib.connectors).length);
+            }
+
+            for (var i=0; i<c.values.length; i++) {
+                c.values[i] = false;
             }
 
             return c;
         });
         data.components = components;
 
+        console.log(data);
         return data;
+    }
+
+    component(data, type) {
+        var key = Object.keys(data.library).find(e => {
+            var component = data.library[e];
+            if (component.type === type) {
+                return component;
+            }
+
+            return null;
+        });
+
+        return data.library[key];
     }
 
     onMove(e) {
@@ -108,15 +115,6 @@ class App extends Component {
                 return e.id === selectedPorts[0].port.id;
             });
 
-            if (!fromConnector.connections) {
-                fromConnector.connections = [];
-            }
-
-            fromConnector.connections.push({
-                component: selectedPorts[1].component,
-                connector: selectedPorts[1].port.id
-            });
-
             wires.push({
                 from: {
                     component: selectedPorts[0].component,
@@ -142,12 +140,12 @@ class App extends Component {
 
     switchValue(id) {
         var components = this.state.components;
-        components[id].connectors[0].value = !components[id].connectors[0].value;
+        components[id].values[0] = !components[id].values[0];
 
         this.setState({
             components: components
         }, () => {
-            updateModel(this.state.components, this.state.wires);
+            updateModel(this.state);
             this.setState({
                 components: this.state.components,
                 wires: this.state.wires
@@ -173,14 +171,13 @@ class App extends Component {
                         <Wires
                             wires={this.state.wires}
                             components={this.state.components}
-                            library={this.state.library}/>
+                            library={this.state.library} />
                         <Components
                             components={this.state.components}
-                            library={this.state.library}/>
+                            library={this.state.library}
                             onMove={this.onMove}
                             selectPort={this.selectPort}
-                            switchValue={this.switchValue}
-                        />
+                            switchValue={this.switchValue} />
                     </Svg>
                     <div>
                         <pre>{JSON.stringify(this.state.wires)}</pre>

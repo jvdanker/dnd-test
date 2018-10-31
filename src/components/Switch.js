@@ -12,8 +12,8 @@ class Switch extends Component {
                     y="0"
                     width="20"
                     height="20"
-                    fill={this.props.connectors[0].value ? "red" : "green"}
-                    onClick={() => this.props.selectPort(this.props.id, this.props.connectors[0])}
+                    fill={this.props.values && this.props.values[0] ? "red" : "green"}
+                    onClick={() => this.props.selectPort(this.props.id, this.props.values[0])}
                 />
                 <rect
                     x="0"

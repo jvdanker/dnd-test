@@ -11,6 +11,11 @@ class Components extends React.Component {
                 {
                     Object.keys(this.props.components).map(id => {
                         const e = this.props.components[id];
+                        console.log(e);
+
+                        var lib = this.component(e.type);
+                        console.log(lib);
+
                         switch (e.type) {
                             case 'NODE':
                                 return (
@@ -19,7 +24,8 @@ class Components extends React.Component {
                                         id={id}
                                         x={e.x}
                                         y={e.y}
-                                        connectors={e.connectors}
+                                        connectors={lib.connectors}
+                                        values={e.values}
                                         onMove={this.props.onMove}
                                         selectPort={this.props.selectPort}/>
                                 );
@@ -30,7 +36,7 @@ class Components extends React.Component {
                                         id={id}
                                         x={e.x}
                                         y={e.y}
-                                        connectors={e.connectors}
+                                        values={e.values}
                                         onMove={this.props.onMove}
                                         selectPort={this.props.selectPort}
                                         switchValue={this.props.switchValue}
@@ -45,6 +51,19 @@ class Components extends React.Component {
                 }
             </g>
         );
+    }
+
+    component(type) {
+        var key = Object.keys(this.props.library).find(e => {
+            var component = this.props.library[e];
+            if (component.type === type) {
+                return component;
+            }
+
+            return null;
+        });
+
+        return this.props.library[key];
     }
 }
 

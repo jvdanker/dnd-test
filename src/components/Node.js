@@ -22,7 +22,7 @@ class Node extends Component {
                             y={e.y}
                             width="20"
                             height="20"
-                            fill={e.selected ? "yellow" : e.value ? "red" : "green"}
+                            fill={e.selected ? "yellow" : this.props.values && this.props.values[e.id] ? "red" : "green"}
                             onClick={() => this.props.selectPort(this.props.id, e)}
                         />
                     )
@@ -37,7 +37,10 @@ class Node extends Component {
             if (component.type === type) {
                 return component;
             }
+
+            return null;
         });
+
         return this.props.library[key];
     }
 }
