@@ -37,7 +37,7 @@ class Components extends React.Component {
                                         values={e.values}
                                         onMove={this.props.onMove}
                                         selectPort={this.props.selectPort}
-                                        switchValue={this.props.switchValue}
+                                        // switchValue={this.props.switchValue}
                                     />
                                 );
                             default:
