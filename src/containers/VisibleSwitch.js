@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 
-import { clickSwitch } from '../actions'
+import { clickSwitch, moveComponent } from '../actions'
 import Switch from '../components/Switch';
 
 const mapStateToProps = (state, ownProps) => {
-    return {
-        // active: ownProps.filter === state.visibilityFilter
-    };
+    const { id } = ownProps;
+    return state.components[id];
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -14,10 +13,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onClick: () => {
             dispatch(clickSwitch(ownProps));
+        },
+        onMove: e => {
+            dispatch(moveComponent(e));
+        },
+        selectPort: () => {
+            // TODO connect to different port
         }
-        // onClick: () => {
-        //     dispatch(setVisibilityFilter(ownProps.filter))
-        // }
     };
 };
 

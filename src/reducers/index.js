@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import messages from './messages'
+import components from './components'
 
 const reducers = combineReducers({
-  messages,
+  components,
 });
 
 export default reducers

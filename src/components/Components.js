@@ -32,11 +32,11 @@ class Components extends React.Component {
                                     <VisibleSwitch
                                         key={id}
                                         id={id}
-                                        x={e.x}
-                                        y={e.y}
-                                        values={e.values}
-                                        onMove={this.props.onMove}
-                                        selectPort={this.props.selectPort}
+                                        // x={e.x}
+                                        // y={e.y}
+                                        // values={e.values}
+                                        // onMove={this.props.onMove}
+                                        // selectPort={this.props.selectPort}
                                         // switchValue={this.props.switchValue}
                                     />
                                 );
