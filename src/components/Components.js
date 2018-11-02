@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Node from './Node';
-import Switch from './Switch';
+import VisibleSwitch from '../containers/VisibleSwitch';
 import {findLib} from '../Logic';
 
 class Components extends React.Component {
@@ -29,7 +29,7 @@ class Components extends React.Component {
                                 );
                             case 'SWITCH':
                                 return (
-                                    <Switch
+                                    <VisibleSwitch
                                         key={id}
                                         id={id}
                                         x={e.x}
