@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { clickSwitch, moveComponent } from '../actions'
+import { clickSwitch, moveComponent } from '../actions/index'
 import Switch from '../components/Switch';
 
 const mapStateToProps = (state, ownProps) => {
@@ -9,10 +9,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    console.log(dispatch, ownProps);
     return {
-        onClick: () => {
-            dispatch(clickSwitch(ownProps));
+        onClick: e => {
+            dispatch(clickSwitch(e));
         },
         onMove: e => {
             dispatch(moveComponent(e));

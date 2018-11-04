@@ -12,6 +12,7 @@ import './App.css';
 
 const Svg = styled.svg`
     flex: 1;
+    width: 100vw;
 `;
 
 class App extends Component {
@@ -27,7 +28,6 @@ class App extends Component {
         this.switchValue = this.switchValue.bind(this);
 
         updateModel(this.state);
-        console.log(findLib);
     }
 
     sanitize(data) {
@@ -166,10 +166,6 @@ class App extends Component {
                             selectPort={this.selectPort}
                             switchValue={this.switchValue} />
                     </Svg>
-                    <div>
-                        <pre>{JSON.stringify(this.state.wires)}</pre>
-                        <pre>{JSON.stringify(this.state.components)}</pre>
-                    </div>
                 </main>
             </div>
         );

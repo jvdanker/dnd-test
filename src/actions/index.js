@@ -11,3 +11,4 @@ export const moveComponent = e => ({
     x: e.x,
     y: e.y
 });
+

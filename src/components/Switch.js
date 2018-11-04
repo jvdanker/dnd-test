@@ -4,11 +4,6 @@ import Moveable from './Moveable';
 
 class Switch extends Component {
 
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
-
     render() {
         return (
             <g>
