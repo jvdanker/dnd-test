@@ -4,11 +4,6 @@ import {findLib} from '../Logic';
 
 class Wires extends React.Component {
 
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
-
     render() {
         const wires = this.props.wires.map(w => {
             var from = this.props.components[w.from.component];

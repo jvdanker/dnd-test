@@ -7,11 +7,6 @@ import {findLib} from '../Logic';
 
 class Components extends React.Component {
 
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
-
     render() {
         return (
             <g>
@@ -23,7 +18,6 @@ class Components extends React.Component {
                 {
                     Object.keys(this.props.components).map(id => {
                         const e = this.props.components[id];
-                        console.log(e);
                         var lib = findLib(this.props.library, e.type);
 
                         switch (e.type) {
@@ -54,7 +48,7 @@ class Components extends React.Component {
                                 );
                             default:
                                 return (
-                                    <svg width="1" height="1" x="0" y="0" key={id}></svg>
+                                    <svg width="1" height="1" x="0" y="0" key={id} />
                                 );
                         }
                     })
