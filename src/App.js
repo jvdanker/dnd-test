@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-import Wires from './components/Wires';
-import Components from './components/Components';
-import Library from './components/Library';
-
-import data from './data';
-import updateModel, {findLib} from './Logic';
+import VisibleComponents from './containers/VisibleComponents';
 
 import './App.css';
 
@@ -20,34 +15,10 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = this.sanitize(data);
-
         this.onMove = this.onMove.bind(this);
         this.addComponent = this.addComponent.bind(this);
         this.selectPort = this.selectPort.bind(this);
         this.switchValue = this.switchValue.bind(this);
-
-        updateModel(this.state);
-    }
-
-    sanitize(data) {
-        var components = Object.keys(data.components).map(key => {
-            var c = data.components[key];
-            var lib = findLib(data.library, c.type);
-
-            if (typeof c.values === 'undefined') {
-                c.values = new Array(Object.keys(lib.connectors).length);
-            }
-
-            for (var i=0; i<c.values.length; i++) {
-                c.values[i] = false;
-            }
-
-            return c;
-        });
-        data.components = components;
-
-        return data;
     }
 
     onMove(e) {
@@ -132,7 +103,6 @@ class App extends Component {
         this.setState({
             components: components
         }, () => {
-            updateModel(this.state);
             this.setState({
                 components: this.state.components,
                 wires: this.state.wires
@@ -153,18 +123,8 @@ class App extends Component {
                             x2="200" y2="100%"
                             stroke="black"
                         />
-                        <Library
-                            library={this.state.library} />
-                        <Wires
-                            wires={this.state.wires}
-                            components={this.state.components}
-                            library={this.state.library} />
-                        <Components
-                            components={this.state.components}
-                            library={this.state.library}
-                            onMove={this.onMove}
-                            selectPort={this.selectPort}
-                            switchValue={this.switchValue} />
+                        {/*<Library library={this.state.library} />*/}
+                        <VisibleComponents />
                     </Svg>
                 </main>
             </div>

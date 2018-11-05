@@ -64,5 +64,24 @@ export function findLib(library, type) {
     return library[key];
 }
 
+export function sanitize(data) {
+    var components = Object.keys(data.components).map(key => {
+        var c = data.components[key];
+        var lib = findLib(data.library, c.type);
+
+        if (typeof c.values === 'undefined') {
+            c.values = new Array(Object.keys(lib.connectors).length);
+
+            for (var i=0; i<c.values.length; i++) {
+                c.values[i] = false;
+            }
+        }
+
+        return c;
+    });
+    data.components = components;
+
+    return data;
+}
 
 export default updateModel;

@@ -1,17 +1,29 @@
 import React from 'react';
 
 import Node from './Node';
-import VisibleSwitch from '../containers/VisibleSwitch';
+import Wires from '../components/Wires';
+import Switch from '../components/Switch';
 import {findLib} from '../Logic';
 
 class Components extends React.Component {
 
+    constructor(props) {
+        super(props);
+        console.log(props);
+    }
+
     render() {
         return (
             <g>
+                <Wires
+                    wires={this.props.wires}
+                    components={this.props.components}
+                    library={this.props.library} />
+
                 {
                     Object.keys(this.props.components).map(id => {
                         const e = this.props.components[id];
+                        console.log(e);
                         var lib = findLib(this.props.library, e.type);
 
                         switch (e.type) {
@@ -29,15 +41,15 @@ class Components extends React.Component {
                                 );
                             case 'SWITCH':
                                 return (
-                                    <VisibleSwitch
+                                    <Switch
                                         key={id}
                                         id={id}
-                                        // x={e.x}
-                                        // y={e.y}
-                                        // values={e.values}
-                                        // onMove={this.props.onMove}
-                                        // selectPort={this.props.selectPort}
-                                        // switchValue={this.props.switchValue}
+                                        x={e.x}
+                                        y={e.y}
+                                        values={e.values}
+                                        onMove={this.props.onMove}
+                                        onClick={this.props.onClick}
+                                        selectPort={this.props.selectPort}
                                     />
                                 );
                             default:
