@@ -1,10 +1,10 @@
 const data = {
     selectedPorts: [],
     wires: [
-        {"from":{"component":"2","port":0},"to":{"component":"0","port":0}},
-        {"from":{"component":"3","port":0},"to":{"component":"0","port":1}},
-        {"from":{"component":"0","port":2},"to":{"component":"1","port":0}},
-        {"from":{"component":"0","port":2},"to":{"component":"1","port":1}},
+        {from:{component:2,port:0},to:{component:0,port:0}},
+        {from:{component:3,port:0},to:{component:0,port:1}},
+        {from:{component:0,port:2},to:{component:1,port:0}},
+        {from:{component:0,port:2},to:{component:1,port:1}},
     ],
     components: {
         0: {

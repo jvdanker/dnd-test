@@ -15,21 +15,8 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.onMove = this.onMove.bind(this);
         this.addComponent = this.addComponent.bind(this);
         this.selectPort = this.selectPort.bind(this);
-        this.switchValue = this.switchValue.bind(this);
-    }
-
-    onMove(e) {
-        const components = this.state.components;
-        const component = components[e.id];
-        component.x = e.x;
-        component.y = e.y;
-
-        this.setState({
-            components: components
-        });
     }
 
     addComponent(id) {
@@ -93,20 +80,6 @@ class App extends Component {
             wires: wires,
             selectedPorts: selectedPorts,
             components: components
-        });
-    }
-
-    switchValue(id) {
-        var components = this.state.components;
-        components[id].values[0] = !components[id].values[0];
-
-        this.setState({
-            components: components
-        }, () => {
-            this.setState({
-                components: this.state.components,
-                wires: this.state.wires
-            });
         });
     }
 
