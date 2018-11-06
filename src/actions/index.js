@@ -12,3 +12,8 @@ export const moveComponent = e => ({
     y: e.y
 });
 
+export const selectComponent = id => ({
+    type: types.SELECT_COMPONENT,
+    id: id
+});
+

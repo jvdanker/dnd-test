@@ -31,7 +31,10 @@ class Components extends React.Component {
                                         connectors={lib.connectors}
                                         values={e.values}
                                         onMove={this.props.onMove}
-                                        selectPort={this.props.selectPort}/>
+                                        onSelect={this.props.selectComponent}
+                                        selectPort={this.props.selectPort}
+                                        selected={e.selected}
+                                    />
                                 );
                             case 'SWITCH':
                                 return (

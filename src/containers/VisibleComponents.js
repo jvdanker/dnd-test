@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { clickSwitch, moveComponent } from '../actions/index'
+import * as actions from '../actions/index'
 import Components from '../components/Components';
 import {sanitize} from '../Logic';
 
@@ -11,13 +11,16 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onClick: e => {
-            dispatch(clickSwitch(e));
+            dispatch(actions.clickSwitch(e));
         },
         onMove: e => {
-            dispatch(moveComponent(e));
+            dispatch(actions.moveComponent(e));
         },
         selectPort: () => {
             // TODO connect to different port
+        },
+        selectComponent: e => {
+            dispatch(actions.selectComponent(e));
         }
     };
 };

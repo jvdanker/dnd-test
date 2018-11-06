@@ -12,7 +12,8 @@ class Node extends Component {
                     y="10"
                     width="90"
                     height="90"
-                    fill="blue"
+                    fill={this.props.selected ? "yellow" : "blue"}
+                    onClick={() => this.props.onSelect(this.props.id)}
                 />
                 {
                     this.props.connectors.map(e =>

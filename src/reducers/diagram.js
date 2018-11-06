@@ -8,6 +8,7 @@ const components = (state = data, action) => {
     const components = state.components;
     const component = components[action.id];
 
+    console.log(action);
     switch (action.type) {
         case types.SWITCH:
             components[action.id] = Object.assign({}, component, {
@@ -21,6 +22,9 @@ const components = (state = data, action) => {
                 x: action.x,
                 y: action.y
             });
+            return newState;
+        case types.SELECT_COMPONENT:
+            components[action.id].selected = !components[action.id].selected;
             return newState;
 
         default:
