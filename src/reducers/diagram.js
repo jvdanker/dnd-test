@@ -6,23 +6,35 @@ import updateModel from '../Logic';
 const components = (state = data, action) => {
     const newState = Object.assign({}, state);
     const components = state.components;
-    const component = components[action.id];
 
-    console.log(action);
     switch (action.type) {
         case types.SWITCH:
-            components[action.id] = Object.assign({}, component, {
-                values: [!(component.values[0])]
-            });
-            updateModel(newState);
-            return newState;
+            for (let i=0; i<components.length; i++) {
+                const c = components[i];
+                if (c.id === action.id) {
+                    components[i] = Object.assign({}, c, {
+                        values: [!(c.values[0])]
+                    });
+                    updateModel(newState);
+                    return newState;
+                }
+            }
+            return state;
 
         case types.MOVE_COMPONENT:
-            components[action.id] = Object.assign({}, component, {
-                x: action.x,
-                y: action.y
-            });
-            return newState;
+            for (let i=0; i<components.length; i++) {
+                const c = components[i];
+                if (c.id === action.id) {
+                    components[i] = Object.assign({}, c, {
+                        x: action.x,
+                        y: action.y
+                    });
+                    updateModel(newState);
+                    return newState;
+                }
+            }
+            return state;
+
         case types.SELECT_COMPONENT:
             components[action.id].selected = !components[action.id].selected;
             return newState;

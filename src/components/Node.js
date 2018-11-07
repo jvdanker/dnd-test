@@ -16,7 +16,7 @@ class Node extends Component {
                     onClick={() => this.props.onSelect(this.props.id)}
                 />
                 {
-                    this.props.connectors.map(e =>
+                    this.props.ports.map(e =>
                         <rect
                             key={e.id}
                             x={e.x}

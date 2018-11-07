@@ -67,10 +67,6 @@ export function findLib(library, type) {
 export function sanitize(data) {
     var components = Object.keys(data.components).map(key => {
         var c = data.components[key];
-        if (c.type === 'COMPOSITE') {
-            return null;
-        }
-
         var lib = findLib(data.library, c.type);
 
         if (typeof c.values === 'undefined') {

@@ -6,7 +6,7 @@ class Wires extends React.Component {
 
     render() {
         const wires = this.props.wires.map(w => {
-            var from = this.props.components[w.from.component];
+            var from = this.props.components.find(c => c.id === w.from.component);
             var fromV = from.values[w.from.port];
             var fromLib = findLib(this.props.library, from.type);
             var fromC = fromLib.connectors.find(c => c.id === w.from.port);

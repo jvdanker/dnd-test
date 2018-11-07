@@ -11,28 +11,92 @@ const data = {
             type: 'NODE',
             x: 250,
             y: 100,
+            wires: [],
+            ports: [
+                {
+                    id: 0,
+                    type: 'INPUT',
+                    x: 10,
+                    y: 90
+                },
+                {
+                    id: 1,
+                    type: 'INPUT',
+                    x: 40,
+                    y: 90
+                },
+                {
+                    id: 2,
+                    type: 'OUTPUT',
+                    x: 10,
+                    y: 0
+                }
+            ],
+            values: [false, false, false]
         },
         {
             id: 1,
             type: 'NODE',
             x: 500,
             y: 100,
+            wires: [],
+            ports: [
+                {
+                    id: 0,
+                    type: 'INPUT',
+                    x: 10,
+                    y: 90
+                },
+                {
+                    id: 1,
+                    type: 'INPUT',
+                    x: 40,
+                    y: 90
+                },
+                {
+                    id: 2,
+                    type: 'OUTPUT',
+                    x: 10,
+                    y: 0
+                }
+            ],
+            values: [false, false, false]
         },
         {
             id: 2,
             type: 'SWITCH',
             x: 250,
             y: 400,
+            wires: [],
+            ports: [
+                {
+                    id: 0,
+                    type: 'OUTPUT',
+                    x: 0,
+                    y: 0,
+                }
+            ],
+            values: [false]
         },
         {
             id: 3,
             type: 'SWITCH',
             x: 350,
             y: 400,
+            wires: [],
+            ports: [
+                {
+                    id: 0,
+                    type: 'OUTPUT',
+                    x: 0,
+                    y: 0,
+                }
+            ],
+            values: [false]
         },
         {
             id: 4,
-            type:'COMPOSITE',
+            type: 'COMPOSITE',
             lib: 2,
             x: 500,
             y: 500,
@@ -157,6 +221,7 @@ const data = {
                     y: 0
                 }
             ],
+            values: [false, false, false]
         }
     ],
     wires: [

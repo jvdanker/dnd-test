@@ -16,19 +16,19 @@ class Components extends React.Component {
                     library={this.props.library} />
 
                 {
-                    Object.keys(this.props.components).map(id => {
-                        const e = this.props.components[id];
-                        var lib = findLib(this.props.library, e.type);
+                    this.props.components.map(e => {
+                        // const e = this.props.components[id];
+                        // var lib = findLib(this.props.library, e.type);
 
                         switch (e.type) {
                             case 'NODE':
                                 return (
                                     <Node
-                                        key={id}
-                                        id={id}
+                                        key={e.id}
+                                        id={e.id}
                                         x={e.x}
                                         y={e.y}
-                                        connectors={lib.connectors}
+                                        ports={e.ports}
                                         values={e.values}
                                         onMove={this.props.onMove}
                                         onSelect={this.props.selectComponent}
@@ -36,22 +36,22 @@ class Components extends React.Component {
                                         selected={e.selected}
                                     />
                                 );
-                            case 'SWITCH':
-                                return (
-                                    <Switch
-                                        key={id}
-                                        id={id}
-                                        x={e.x}
-                                        y={e.y}
-                                        values={e.values}
-                                        onMove={this.props.onMove}
-                                        onClick={this.props.onClick}
-                                        selectPort={this.props.selectPort}
-                                    />
-                                );
+                            // case 'SWITCH':
+                            //     return (
+                            //         <Switch
+                            //             key={id}
+                            //             id={id}
+                            //             x={e.x}
+                            //             y={e.y}
+                            //             values={e.values}
+                            //             onMove={this.props.onMove}
+                            //             onClick={this.props.onClick}
+                            //             selectPort={this.props.selectPort}
+                            //         />
+                            //     );
                             default:
                                 return (
-                                    <svg width="1" height="1" x="0" y="0" key={id} />
+                                    <svg width="1" height="1" x="0" y="0" key={e.id} />
                                 );
                         }
                     })
