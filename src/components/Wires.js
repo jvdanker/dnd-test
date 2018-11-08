@@ -11,7 +11,7 @@ class Wires extends React.Component {
             var fromLib = findLib(this.props.library, from.type);
             var fromC = fromLib.connectors.find(c => c.id === w.from.port);
 
-            var to = this.props.components[w.to.component];
+            var to = this.props.components.find(c => c.id === w.to.component);
             var toLib = findLib(this.props.library, to.type);
             var toC = toLib.connectors.find(c => c.id === w.to.port);
 

@@ -7,6 +7,16 @@ const data = {
     // no x, y, lib
     components: [
         {
+            id: 100,
+            type: 'ROOT',
+            x: 100,
+            y: 100,
+            components: [],
+            wires: [],
+            ports: [],
+            values: []
+        },
+        {
             id: 0,
             type: 'NODE',
             x: 250,

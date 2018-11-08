@@ -5,13 +5,13 @@ import Components from '../components/Components';
 import {sanitize} from '../Logic';
 
 const mapStateToProps = (state, ownProps) => {
-    // return sanitize(state.diagram);
-    return state.diagram;
+    return sanitize(state.diagram);
+    // return state.diagram;
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onClick: e => {
+        onClickSwitch: e => {
             dispatch(actions.clickSwitch(e));
         },
         onMove: e => {

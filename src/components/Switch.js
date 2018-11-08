@@ -21,8 +21,7 @@ class Switch extends Component {
                     width="20"
                     height="20"
                     fill={this.props.value ? "red" : "blue"}
-                    // onClick={() => this.props.switchValue(this.props.id)}
-                    onClick={() => this.props.onClick(this.props.id)}
+                    onClick={() => this.props.onClickSwitch(this.props.id)}
                 />
             </g>
         )

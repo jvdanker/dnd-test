@@ -16,15 +16,18 @@ function updateModel(state) {
 
         for (let j=0; j<wires.length && !changed; j++) {
             var w = wires[j];
-            var from = components[w.from.component];
-            var fromV = from.values[w.from.port];
-            var fromL = findLib(library, from.type);
-            var fromC = fromL.connectors.find(c => c.id === w.from.port);
 
-            var to = components[w.to.component];
+            // var from = components[w.from.component];
+            var from = components.find(c => c.id === w.from.component);
+            var fromV = from.values[w.from.port];
+            // var fromL = findLib(library, from.type);
+            // var fromC = fromL.connectors.find(c => c.id === w.from.port);
+
+            var to = components.find(c => c.id === w.to.component);
+            // var to = components[w.to.component];
             var toV = to.values[w.to.port];
-            var toL = findLib(library, to.type);
-            var toC = toL.connectors.find(c => c.id === w.to.port);
+            // var toL = findLib(library, to.type);
+            // var toC = toL.connectors.find(c => c.id === w.to.port);
 
             if (fromV !== toV) {
                 changed = true;
