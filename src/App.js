@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-import VisibleComponents from './containers/VisibleComponents';
+import Components from './components/Components';
 
 import './App.css';
 
@@ -89,6 +89,9 @@ class App extends Component {
                 <header>
                     test
                 </header>
+                <pre>
+                    {JSON.stringify(this.state)}
+                </pre>
                 <main>
                     <Svg>
                         <line
@@ -97,7 +100,9 @@ class App extends Component {
                             stroke="black"
                         />
                         {/*<Library library={this.state.library} />*/}
-                        <VisibleComponents />
+                        {/*<Components*/}
+                            {/*components={this.state.diagram.components}*/}
+                        {/*/>*/}
                     </Svg>
                 </main>
             </div>

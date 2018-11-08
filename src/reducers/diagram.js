@@ -7,6 +7,7 @@ const components = (state = data, action) => {
     const newState = Object.assign({}, state);
     const components = state.components;
 
+    console.log(action, state);
     switch (action.type) {
         case 'ROOT':
             return "";

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Wires from '../components/Wires';
+// import VisibleComponents from '../containers/VisibleComponents';
+// import Wires from '../components/Wires';
 import Node from './Node';
 import Switch from '../components/Switch';
 
@@ -11,6 +12,10 @@ class Component extends React.Component {
 
         // TODO render wires
         switch (component.type) {
+            case 'ROOT':
+                return <g></g>;
+                // return <VisibleComponents />;
+
             case 'NODE':
                 return (
                     <Node
