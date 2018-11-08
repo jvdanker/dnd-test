@@ -8,6 +8,9 @@ const components = (state = data, action) => {
     const components = state.components;
 
     switch (action.type) {
+        case 'ROOT':
+            return "";
+
         case types.SWITCH:
             for (let i=0; i<components.length; i++) {
                 const c = components[i];
