@@ -1,16 +1,15 @@
 import { connect } from 'react-redux';
 
 import * as actions from '../actions/index'
-import Components from '../components/Components';
-import {sanitize} from '../Logic';
+import Component from '../components/Component';
 
-// TODO maybe this state boundary doesn't need to be there (just on the component level)?
 const mapStateToProps = (state, ownProps) => {
-    return sanitize(state.diagram);
-    // return state.diagram;
+    // TODO restrict state to single component?
+    return state;
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+    // TODO remove actions from VisibleComponents?
     return {
         onClickSwitch: e => {
             dispatch(actions.clickSwitch(e));
@@ -30,6 +29,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const VisibleComponents = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Components);
+)(Component);
 
 export default VisibleComponents;
