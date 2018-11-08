@@ -4,11 +4,16 @@ import data from '../data';
 import updateModel from '../Logic';
 
 const components = (state = data, action) => {
-    const newState = Object.assign({}, state);
+    // const newState = Object.assign({}, state);
+    const newState = JSON.parse(JSON.stringify(state));
+    console.log(newState);
     const components = state.components;
 
-    console.log(action, state);
     switch (action.type) {
+        case '@@INIT':
+            updateModel(newState);
+            return newState;
+
         case 'ROOT':
             return "";
 
