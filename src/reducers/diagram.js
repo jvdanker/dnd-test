@@ -14,9 +14,6 @@ const components = (state = data, action) => {
             updateModel(newState);
             return newState;
 
-        case 'ROOT':
-            return "";
-
         case types.SWITCH:
             for (let i=0; i<components.length; i++) {
                 const c = components[i];
@@ -24,7 +21,7 @@ const components = (state = data, action) => {
                     components[i] = Object.assign({}, c, {
                         values: [!(c.values[0])]
                     });
-                    updateModel(newState);
+                    // updateModel(newState);
                     return newState;
                 }
             }
@@ -34,11 +31,9 @@ const components = (state = data, action) => {
             for (let i=0; i<components.length; i++) {
                 const c = components[i];
                 if (c.id === action.id) {
-                    components[i] = Object.assign({}, c, {
-                        x: action.x,
-                        y: action.y
-                    });
-                    updateModel(newState);
+                    components[i].x = action.x;
+                    components[i].y = action.y;
+                    // updateModel(newState);
                     return newState;
                 }
             }

@@ -2,10 +2,17 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/index'
 import Component from '../components/Component';
+import {sanitize} from "../Logic";
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state, ownProps);
+
+    if (Object.keys(ownProps).length === 0) {
+        return {component: state.diagram.components[0]};
+    }
+
     // TODO restrict state to single component?
-    return state;
+    return sanitize(state);
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -26,9 +33,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 };
 
-const VisibleComponents = connect(
+const VisibleComponent = connect(
     mapStateToProps,
     mapDispatchToProps
 )(Component);
 
-export default VisibleComponents;
+export default VisibleComponent;

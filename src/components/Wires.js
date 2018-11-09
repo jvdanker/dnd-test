@@ -1,19 +1,25 @@
 import React from 'react';
 
-import {findLib} from '../Logic';
+// import {findLib} from '../Logic';
 
 class Wires extends React.Component {
 
     render() {
         const wires = this.props.wires.map(w => {
+            var p = this.props;
+            console.log(p);
             var from = this.props.components.find(c => c.id === w.from.component);
             var fromV = from.values[w.from.port];
-            var fromLib = findLib(this.props.library, from.type);
-            var fromC = fromLib.connectors.find(c => c.id === w.from.port);
+            // var fromC = this.props.ports.find(p => p.id === w.from.port);
+            var fromC = from.ports.find(p => p.id === w.from.port);
+
+            // var fromLib = findLib(this.props.library, from.type);
+            // var fromC = fromLib.connectors.find(c => c.id === w.from.port);
 
             var to = this.props.components.find(c => c.id === w.to.component);
-            var toLib = findLib(this.props.library, to.type);
-            var toC = toLib.connectors.find(c => c.id === w.to.port);
+            var toC = to.ports.find(p => p.id === w.to.port);
+            // var toLib = findLib(this.props.library, to.type);
+            // var toC = toLib.connectors.find(c => c.id === w.to.port);
 
             return (
                 <line

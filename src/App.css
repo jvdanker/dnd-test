@@ -29,6 +29,7 @@ main {
     display: flex;
     flex: 1;
     height: 90vh;
+    width: 100vw;
     flex-direction: column;
 
 }
