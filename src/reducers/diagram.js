@@ -7,35 +7,30 @@ const components = (state = data, action) => {
     // const newState = Object.assign({}, state);
     const newState = JSON.parse(JSON.stringify(state));
     console.log(newState);
-    const components = state.components;
+    const components = newState.components;
 
+    console.log(action);
     switch (action.type) {
         case '@@INIT':
             updateModel(newState);
             return newState;
 
         case types.SWITCH:
-            for (let i=0; i<components.length; i++) {
-                const c = components[i];
-                if (c.id === action.id) {
-                    components[i] = Object.assign({}, c, {
-                        values: [!(c.values[0])]
-                    });
-                    // updateModel(newState);
-                    return newState;
-                }
+            var c = findComponent(components[0], action.id);
+            if (c !== -1) {
+                c.values[0] = !c.values[0];
+                // updateModel(newState);
+                return newState;
             }
             return state;
 
         case types.MOVE_COMPONENT:
-            for (let i=0; i<components.length; i++) {
-                const c = components[i];
-                if (c.id === action.id) {
-                    components[i].x = action.x;
-                    components[i].y = action.y;
-                    // updateModel(newState);
-                    return newState;
-                }
+            var c = findComponent(components[0], action.id);
+            if (c !== -1) {
+                c.x = action.x;
+                c.y = action.y;
+                // updateModel(newState);
+                return newState;
             }
             return state;
 
@@ -47,5 +42,24 @@ const components = (state = data, action) => {
             return state;
     }
 };
+
+function findComponent(root, id) {
+    if (root.id === id) {
+        return root;
+    }
+
+    if (typeof root.components === 'undefined') {
+        return -1;
+    }
+
+    for (let i=0; i<root.components.length; i++) {
+        const c = findComponent(root.components[i], id);
+        if (c !== -1) {
+            return c;
+        }
+    }
+
+    return -1;
+}
 
 export default components;

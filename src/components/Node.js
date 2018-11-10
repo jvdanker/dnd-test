@@ -13,7 +13,7 @@ class Node extends Component {
                     width="90"
                     height="90"
                     fill={this.props.selected ? "yellow" : "blue"}
-                    onClick={() => this.props.onSelect(this.props.id)}
+                    onClick={() => this.props.onSelectComponent(this.props.id)}
                 />
                 {
                     this.props.ports.map(e =>

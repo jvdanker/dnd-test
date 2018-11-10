@@ -2,6 +2,7 @@ import React from 'react';
 
 import Wires from '../components/Wires';
 import Components from '../components/Components';
+import VisibleComponents from '../containers/VisibleComponents';
 import Node from './Node';
 import Switch from '../components/Switch';
 
@@ -24,7 +25,12 @@ class Component extends React.Component {
                             components={component.components}
                             ports={component.ports}
                         />
-                        <Components component={component}/>
+                        <Components
+                            component={component}
+                            onMove={this.props.onMove}
+                            onSelectComponent={this.props.onSelectComponent}
+                            onClickSwitch={this.props.onClickSwitch}
+                        />
                     </g>
                 );
 
@@ -37,7 +43,7 @@ class Component extends React.Component {
                         ports={component.ports}
                         values={component.values}
                         onMove={this.props.onMove}
-                        onSelect={this.props.selectComponent}
+                        onSelectComponent={this.props.onSelectComponent}
                         selectPort={this.props.selectPort}
                         selected={component.selected}
                     />

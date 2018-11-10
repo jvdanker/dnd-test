@@ -5,14 +5,17 @@ import Component from '../components/Component';
 import {sanitize} from "../Logic";
 
 const mapStateToProps = (state, ownProps) => {
-    // TODO restrict state to single component?
-    return sanitize(state);
+    console.log(state.diagram.components[0]);
+    return {
+        component: state.diagram.components[0]
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     // TODO remove actions from VisibleComponents?
     return {
         onClickSwitch: e => {
+            console.log(e);
             dispatch(actions.clickSwitch(e));
         },
         onMove: e => {
@@ -21,15 +24,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         selectPort: () => {
             // TODO connect to different port
         },
-        selectComponent: e => {
+        onSelectComponent: e => {
             dispatch(actions.selectComponent(e));
         }
     };
 };
 
-const VisibleComponent = connect(
+const RootComponent = connect(
     mapStateToProps,
     mapDispatchToProps
 )(Component);
 
-export default VisibleComponent;
+export default RootComponent;

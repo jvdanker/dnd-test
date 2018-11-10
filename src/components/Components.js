@@ -1,6 +1,7 @@
 import React from 'react';
 
 import VisibleComponent from "../containers/VisibleComponent";
+import Component from "../components/Component";
 
 class Components extends React.Component {
 
@@ -11,7 +12,13 @@ class Components extends React.Component {
 
     render() {
         return this.props.component.components.map(e =>
-            <VisibleComponent key={e.id} component={e} />
+            <Component
+                key={e.id}
+                component={e}
+                onMove={this.props.onMove}
+                onSelectComponent={this.props.onSelectComponent}
+                onClickSwitch={this.props.onClickSwitch}
+            />
         );
     }
 }
