@@ -1,31 +1,37 @@
 
-function updateModel(state) {
-    return state;
-
+function updateModel(state, root) {
     const {library, components, wires} = state;
 
     var changed = true;
-    var i = 0;
+    var depth = 0;
+
+    if (typeof root === 'undefined') {
+        root = state.components[0];
+    }
+
+    if (typeof root.components === 'undefined') {
+        return;
+    }
 
     while (changed) {
         changed = false;
-        i++;
+        depth++;
 
-        if (i > 100) {
+        if (depth > 100) {
             alert('Error');
             return;
         }
 
-        for (let j=0; j<wires.length && !changed; j++) {
-            var w = wires[j];
+        for (let j=0; j<root.wires.length && !changed; j++) {
+            var w = root.wires[j];
 
             // var from = components[w.from.component];
-            var from = components.find(c => c.id === w.from.component);
+            var from = root.components.find(c => c.id === w.from.component);
             var fromV = from.values[w.from.port];
             // var fromL = findLib(library, from.type);
             // var fromC = fromL.connectors.find(c => c.id === w.from.port);
 
-            var to = components.find(c => c.id === w.to.component);
+            var to = root.components.find(c => c.id === w.to.component);
             // var to = components[w.to.component];
             var toV = to.values[w.to.port];
             // var toL = findLib(library, to.type);
@@ -37,9 +43,8 @@ function updateModel(state) {
             }
         }
 
-        for (let j=0; j<Object.keys(components).length && !changed; j++) {
-            var key = Object.keys(components)[j];
-            var c = components[key];
+        for (let i=0; i<root.components.length && !changed; i++) {
+            var c = root.components[i];
 
             if (c.type === 'NODE') {
                 var c1 = c.values[0];
@@ -51,6 +56,10 @@ function updateModel(state) {
                     changed = true;
                     c.values[2] = result;
                 }
+            }
+
+            if (!changed) {
+                updateModel(state, c);
             }
         }
     }

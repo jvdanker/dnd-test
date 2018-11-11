@@ -10,7 +10,6 @@ class Component extends React.Component {
 
     render() {
         const component = this.props.component;
-        console.log(component);
 
         // return <text x={component.x} y={component.y}>{component.type}</text>;
 

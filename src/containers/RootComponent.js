@@ -5,7 +5,6 @@ import Component from '../components/Component';
 import {sanitize} from "../Logic";
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state.diagram.components[0]);
     return {
         component: state.diagram.components[0]
     };

@@ -6,10 +6,8 @@ import updateModel from '../Logic';
 const components = (state = data, action) => {
     // const newState = Object.assign({}, state);
     const newState = JSON.parse(JSON.stringify(state));
-    console.log(newState);
     const components = newState.components;
 
-    console.log(action);
     switch (action.type) {
         case '@@INIT':
             updateModel(newState);
@@ -19,7 +17,7 @@ const components = (state = data, action) => {
             var c = findComponent(components[0], action.id);
             if (c !== -1) {
                 c.values[0] = !c.values[0];
-                // updateModel(newState);
+                updateModel(newState);
                 return newState;
             }
             return state;
@@ -29,14 +27,17 @@ const components = (state = data, action) => {
             if (c !== -1) {
                 c.x = action.x;
                 c.y = action.y;
-                // updateModel(newState);
                 return newState;
             }
             return state;
 
         case types.SELECT_COMPONENT:
-            components[action.id].selected = !components[action.id].selected;
-            return newState;
+            var c = findComponent(components[0], action.id);
+            if (c !== -1) {
+                c.selected = !c.selected;
+                return newState;
+            }
+            return state;
 
         default:
             return state;
