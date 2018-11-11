@@ -164,4 +164,8 @@ function selectPort(component, port) {
     });
 }
 
+export function mergeComponents(state, selectedComponents) {
+    console.log('merge', selectedComponents);
+}
+
 export default updateModel;

@@ -17,3 +17,6 @@ export const selectComponent = id => ({
     id: id
 });
 
+export const mergeSelectedComponents = () => ({
+    type: types.MERGE_SELECTED_COMPONENTS
+});

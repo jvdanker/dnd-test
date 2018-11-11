@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import VisibleComponents from './containers/VisibleComponents';
 import VisibleComponent from './containers/VisibleComponent';
 import RootComponent from './containers/RootComponent';
+import ActionsComponent from './containers/ActionsComponent';
 
 import './App.css';
 
@@ -27,6 +28,7 @@ class App extends Component {
                             x2="200" y2="100%"
                             stroke="black"
                         />
+                        <ActionsComponent />
                         <RootComponent />
                         {/*<Library library={this.state.library} />*/}
                         {/*<Components*/}

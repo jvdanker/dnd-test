@@ -2,6 +2,7 @@ import * as types from '../constants/ActionTypes';
 
 import data from '../data';
 import updateModel from '../Logic';
+import { mergeComponents } from '../Logic';
 
 const components = (state = data, action) => {
     // const newState = Object.assign({}, state);
@@ -9,11 +10,12 @@ const components = (state = data, action) => {
     const components = newState.components;
 
     switch (action.type) {
-        case '@@INIT':
+        case '@@INIT': {
             updateModel(newState);
             return newState;
+        }
 
-        case types.SWITCH:
+        case types.SWITCH: {
             var c = findComponent(components[0], action.id);
             if (c !== -1) {
                 c.values[0] = !c.values[0];
@@ -21,8 +23,9 @@ const components = (state = data, action) => {
                 return newState;
             }
             return state;
+        }
 
-        case types.MOVE_COMPONENT:
+        case types.MOVE_COMPONENT: {
             var c = findComponent(components[0], action.id);
             if (c !== -1) {
                 c.x = action.x;
@@ -30,14 +33,29 @@ const components = (state = data, action) => {
                 return newState;
             }
             return state;
+        }
 
-        case types.SELECT_COMPONENT:
+        case types.SELECT_COMPONENT: {
             var c = findComponent(components[0], action.id);
             if (c !== -1) {
                 c.selected = !c.selected;
+
+                if (c.selected) {
+                    newState.selectedComponents.push(c);
+                } else {
+                    newState.selectedComponents = newState.selectedComponents.filter(component => {
+                        return component.id !== c.id;
+                    });
+                }
                 return newState;
             }
             return state;
+        }
+
+        case types.MERGE_SELECTED_COMPONENTS: {
+            mergeComponents(newState, state.selectedComponents);
+            return state;
+        }
 
         default:
             return state;

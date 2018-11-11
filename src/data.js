@@ -1,5 +1,6 @@
 const data = {
         selectedPorts: [],
+        selectedComponents: [],
 
         components: [
             {
