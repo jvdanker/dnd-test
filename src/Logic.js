@@ -178,13 +178,7 @@ export function mergeComponents(state, selectedComponents) {
         values: []
     };
 
-    console.log(newComponent);
-
-    console.log(state.components);
-
     state.components[0].components.push(newComponent);
-
-    console.log(state);
 }
 
 export default updateModel;

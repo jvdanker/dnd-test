@@ -5,13 +5,7 @@ import Component from "../components/Component";
 
 class Components extends React.Component {
 
-    constructor(props) {
-        super(props);
-        console.log(props);
-    }
-
     render() {
-        console.log(this.props.component.components);
         return this.props.component.components.map(e =>
             <Component
                 key={e.id}

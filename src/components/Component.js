@@ -32,11 +32,6 @@ class Component extends React.Component {
                     </g>
                 );
 
-                // console.log(component);
-                // return (
-                //     <rect x="500" y="50" width="100" height="50" fill="green" />
-                // );
-
             case 'COMPOSITE':
             case 'NODE':
                 return (
@@ -52,6 +47,7 @@ class Component extends React.Component {
                         selected={component.selected}
                     />
                 );
+
             case 'SWITCH':
                 return (
                     <Switch
