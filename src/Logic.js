@@ -170,8 +170,8 @@ export function mergeComponents(state, selectedComponents) {
     var newComponent = {
         id: 4,
         type: 'COMPOSITE',
-        x: 500,
-        y: 500,
+        x: 250,
+        y: 10,
         components: selectedComponents,
         wires: [],
         ports: [],
@@ -180,7 +180,11 @@ export function mergeComponents(state, selectedComponents) {
 
     console.log(newComponent);
 
-    state.components.push(newComponent);
+    console.log(state.components);
+
+    state.components[0].components.push(newComponent);
+
+    console.log(state);
 }
 
 export default updateModel;

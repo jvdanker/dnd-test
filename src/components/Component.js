@@ -32,12 +32,12 @@ class Component extends React.Component {
                     </g>
                 );
 
-            case 'COMPOSITE':
-                console.log(component);
-                return (
-                    <rect x="500" y="50" width="100" height="50" fill="green" />
-                );
+                // console.log(component);
+                // return (
+                //     <rect x="500" y="50" width="100" height="50" fill="green" />
+                // );
 
+            case 'COMPOSITE':
             case 'NODE':
                 return (
                     <Node

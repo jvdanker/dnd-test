@@ -11,6 +11,7 @@ class Components extends React.Component {
     }
 
     render() {
+        console.log(this.props.component.components);
         return this.props.component.components.map(e =>
             <Component
                 key={e.id}
