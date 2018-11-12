@@ -166,6 +166,21 @@ function selectPort(component, port) {
 
 export function mergeComponents(state, selectedComponents) {
     console.log('merge', selectedComponents);
+
+    var newComponent = {
+        id: 4,
+        type: 'COMPOSITE',
+        x: 500,
+        y: 500,
+        components: selectedComponents,
+        wires: [],
+        ports: [],
+        values: []
+    };
+
+    console.log(newComponent);
+
+    state.components.push(newComponent);
 }
 
 export default updateModel;

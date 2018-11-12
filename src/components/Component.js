@@ -16,7 +16,6 @@ class Component extends React.Component {
         // TODO render wires
         switch (component.type) {
             case 'ROOT':
-                // return <g></g>;
                 return (
                     <g>
                         <Wires
@@ -31,6 +30,12 @@ class Component extends React.Component {
                             onClickSwitch={this.props.onClickSwitch}
                         />
                     </g>
+                );
+
+            case 'COMPOSITE':
+                console.log(component);
+                return (
+                    <rect x="500" y="50" width="100" height="50" fill="green" />
                 );
 
             case 'NODE':
@@ -59,6 +64,9 @@ class Component extends React.Component {
                         selectPort={this.props.selectPort}
                     />
                 );
+
+            default:
+                return <g/>
         }
 
 

@@ -54,7 +54,8 @@ const components = (state = data, action) => {
 
         case types.MERGE_SELECTED_COMPONENTS: {
             mergeComponents(newState, state.selectedComponents);
-            return state;
+            console.log(newState);
+            return newState;
         }
 
         default:
