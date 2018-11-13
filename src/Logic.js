@@ -1,9 +1,7 @@
 
 function updateModel(state, root) {
-    const {library, components, wires} = state;
-
-    var changed = true;
-    var depth = 0;
+    let changed = true;
+    let depth = 0;
 
     if (typeof root === 'undefined') {
         root = state.components[0];
@@ -23,19 +21,19 @@ function updateModel(state, root) {
         }
 
         for (let j=0; j<root.wires.length && !changed; j++) {
-            var w = root.wires[j];
+            let w = root.wires[j];
 
-            // var from = components[w.from.component];
-            var from = root.components.find(c => c.id === w.from.component);
-            var fromV = from.values[w.from.port];
-            // var fromL = findLib(library, from.type);
-            // var fromC = fromL.connectors.find(c => c.id === w.from.port);
+            let from = root;
+            if (typeof w.from.component !== 'undefined') {
+                from = root.components.find(c => c.id === w.from.component);
+            }
+            let fromV = from.values[w.from.port];
 
-            var to = root.components.find(c => c.id === w.to.component);
-            // var to = components[w.to.component];
-            var toV = to.values[w.to.port];
-            // var toL = findLib(library, to.type);
-            // var toC = toL.connectors.find(c => c.id === w.to.port);
+            let to = root;
+            if (typeof w.to.component !== 'undefined') {
+                to = root.components.find(c => c.id === w.to.component);
+            }
+            let toV = to.values[w.to.port];
 
             if (fromV !== toV) {
                 changed = true;
@@ -44,23 +42,21 @@ function updateModel(state, root) {
         }
 
         for (let i=0; i<root.components.length && !changed; i++) {
-            var c = root.components[i];
+            let c = root.components[i];
 
             if (c.type === 'NODE') {
-                var c1 = c.values[0];
-                var c2 = c.values[1];
-                var c3 = c.values[2];
+                let c1 = c.values[0];
+                let c2 = c.values[1];
+                let c3 = c.values[2];
 
-                var result = !(c1 && c2);
+                let result = !(c1 && c2);
                 if (result !== c3) {
                     changed = true;
                     c.values[2] = result;
                 }
             }
 
-            if (!changed) {
-                updateModel(state, c);
-            }
+            updateModel(state, c);
         }
     }
 }
@@ -164,10 +160,34 @@ function selectPort(component, port) {
     });
 }
 
+
+export function findComponent(root, id) {
+    if (root.id === id) {
+        return root;
+    }
+
+    if (typeof root.components === 'undefined') {
+        return -1;
+    }
+
+    for (let i=0; i<root.components.length; i++) {
+        const c = findComponent(root.components[i], id);
+        if (c !== -1) {
+            return c;
+        }
+    }
+
+    return -1;
+}
+
+export function findPort(component, id) {
+    return component.ports.filter(p => p.id === id)[0];
+}
+
 export function mergeComponents(state, selectedComponents) {
     console.log('merge', selectedComponents);
 
-    var newComponent = {
+    let newComponent = {
         id: 4,
         type: 'COMPOSITE',
         x: 250,
@@ -178,7 +198,70 @@ export function mergeComponents(state, selectedComponents) {
         values: []
     };
 
-    state.components[0].components.push(newComponent);
+    let root = state.components[0];
+
+    let ids = selectedComponents.map(c => c.id);
+    console.log(ids);
+    let idSet = new Set(ids);
+
+    root.wires.map(w => {
+        if (idSet.has(w.from.component)) {
+            let component = findComponent(root, w.from.component);
+            let port = Object.assign({}, findPort(component, w.from.port));
+
+            if (!findPort(newComponent, w.from.port)) {
+                newComponent.ports.push(port);
+
+                newComponent.wires.push({
+                    from: {
+                        component: w.from.component, // FIXME find component
+                        port: w.from.port,
+                    },
+                    to: {
+                        // no component id (external port)
+                        port: port.id
+                    }
+                });
+            }
+
+            w.from.component = newComponent.id;
+        }
+    });
+
+    root.wires.map(w => {
+        if (idSet.has(w.to.component)) {
+            let component = findComponent(root, w.to.component);
+            // TODO generate new destination port id, could collide with existing ids
+            let port = Object.assign({}, findPort(component, w.to.port));
+
+            if (!findPort(newComponent, w.to.port)) {
+                newComponent.ports.push(port);
+
+                newComponent.wires.push({
+                    from: {
+                        // no component id (external port)
+                        port: port.id
+                    },
+                    to: {
+                        component: w.to.component, // FIXME find component
+                        port: w.to.port
+                    }
+                });
+            }
+
+            w.to.component = newComponent.id;
+        }
+    });
+
+    console.log('newComponent=', newComponent);
+
+    // root.wires = root.wires.filter(w => idSet.has(w.from.component));
+    // root.wires = root.wires.filter(w => idSet.has(w.to.component));
+    console.log(root.wires);
+
+    root.components = root.components.filter(c => !idSet.has(c.id));
+    root.components.push(newComponent);
+    console.log(root.components);
 }
 
 export default updateModel;
