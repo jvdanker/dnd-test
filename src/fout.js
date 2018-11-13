@@ -156,6 +156,7 @@ const data = {
                     {
                         id: 3,
                         type: 'SWITCH',
+                        type: 'SWITCH',
                         x: 350,
                         y: 400,
                         wires: [],
