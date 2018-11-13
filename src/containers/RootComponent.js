@@ -14,7 +14,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     // TODO remove actions from VisibleComponents?
     return {
         onClickSwitch: e => {
-            console.log(e);
             dispatch(actions.clickSwitch(e));
         },
         onMove: e => {

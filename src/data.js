@@ -10,77 +10,41 @@ const data = {
                 y: 100,
                 components: [
                     {
-                        id: 200,
-                        type: 'COMPOSITE',
+                        id: 0,
+                        type: 'NODE',
                         x: 250,
                         y: 100,
-                        components: [
+                        components: [],
+                        wires: [],
+                        ports: [
                             {
                                 id: 0,
-                                type: 'NODE',
-                                x: 250,
-                                y: 100,
-                                components: [],
-                                wires: [],
-                                ports: [
-                                    {
-                                        id: 0,
-                                        type: 'INPUT',
-                                        x: 10,
-                                        y: 90
-                                    },
-                                    {
-                                        id: 1,
-                                        type: 'INPUT',
-                                        x: 40,
-                                        y: 90
-                                    },
-                                    {
-                                        id: 2,
-                                        type: 'OUTPUT',
-                                        x: 10,
-                                        y: 0
-                                    }
-                                ],
-                                values: [false, false, false]
+                                type: 'INPUT',
+                                x: 10,
+                                y: 90
                             },
                             {
                                 id: 1,
-                                type: 'NODE',
-                                x: 500,
-                                y: 100,
-                                components: [],
-                                wires: [],
-                                ports: [
-                                    {
-                                        id: 0,
-                                        type: 'INPUT',
-                                        x: 10,
-                                        y: 90
-                                    },
-                                    {
-                                        id: 1,
-                                        type: 'INPUT',
-                                        x: 40,
-                                        y: 90
-                                    },
-                                    {
-                                        id: 2,
-                                        type: 'OUTPUT',
-                                        x: 10,
-                                        y: 0
-                                    }
-                                ],
-                                values: [false, false, false]
+                                type: 'INPUT',
+                                x: 40,
+                                y: 90
                             },
+                            {
+                                id: 2,
+                                type: 'OUTPUT',
+                                x: 10,
+                                y: 0
+                            }
                         ],
-                        wires: [
-                            {from: {port: 0}, to: {component: 0, port: 0}},
-                            {from: {port: 1}, to: {component: 0, port: 1}},
-                            {from: {component: 1, port: 2}, to: {port: 2}},
-                            {from: {component: 0, port: 2}, to: {component: 1, port: 0}},
-                            {from: {component: 0, port: 2}, to: {component: 1, port: 1}}
-                        ],
+                        values: [false, false, false]
+                    },
+                    {
+                        id: 1,
+                        type: 'NODE',
+                        x: 500,
+                        y: 100,
+                        components: [],
+                        wires: [],
                         ports: [
                             {
                                 id: 0,
@@ -139,8 +103,10 @@ const data = {
                 // wires external ports to internal components
                 // wires internal components together
                 wires: [
-                    {from: {component: 2, port: 0}, to: {component: 200, port: 0}},
-                    {from: {component: 3, port: 0}, to: {component: 200, port: 1}}
+                    {from: {component: 2, port: 0}, to: {component: 0, port: 0}},
+                    {from: {component: 3, port: 0}, to: {component: 0, port: 1}},
+                    {from: {component: 0, port: 2}, to: {component: 1, port: 0}},
+                    {from: {component: 0, port: 2}, to: {component: 1, port: 1}},
                 ],
                 // external ports exposed by this composite component
                 // this should be automatically generated using the components and wires definitions
