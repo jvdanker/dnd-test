@@ -33,6 +33,23 @@ class Component extends React.Component {
                 );
 
             case 'COMPOSITE':
+                return (
+                    <g>
+                        <Wires
+                            wires={component.wires}
+                            components={component.components}
+                            ports={component.ports}
+                            component={component}
+                        />
+                        <Components
+                            component={component}
+                            onMove={this.props.onMove}
+                            onSelectComponent={this.props.onSelectComponent}
+                            onClickSwitch={this.props.onClickSwitch}
+                        />
+                    </g>
+                );
+
             case 'NODE':
                 return (
                     <Node

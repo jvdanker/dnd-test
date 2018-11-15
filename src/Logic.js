@@ -190,7 +190,7 @@ export function mergeComponents(state, selectedComponents) {
     let newComponent = {
         id: 4,
         type: 'COMPOSITE',
-        x: 250,
+        x: 550,
         y: 10,
         components: selectedComponents,
         wires: [],
@@ -205,6 +205,7 @@ export function mergeComponents(state, selectedComponents) {
     let idSet = new Set(ids);
 
     root.wires.map(w => {
+        return;
         if (idSet.has(w.from.component)) {
             let component = findComponent(root, w.from.component);
             let port = Object.assign({}, findPort(component, w.from.port));
@@ -229,6 +230,7 @@ export function mergeComponents(state, selectedComponents) {
     });
 
     root.wires.map(w => {
+        return;
         if (idSet.has(w.to.component)) {
             let component = findComponent(root, w.to.component);
             // TODO generate new destination port id, could collide with existing ids
@@ -255,11 +257,7 @@ export function mergeComponents(state, selectedComponents) {
 
     console.log('newComponent=', newComponent);
 
-    // root.wires = root.wires.filter(w => idSet.has(w.from.component));
-    // root.wires = root.wires.filter(w => idSet.has(w.to.component));
-    console.log(root.wires);
-
-    root.components = root.components.filter(c => !idSet.has(c.id));
+    // root.components = root.components.filter(c => !idSet.has(c.id));
     root.components.push(newComponent);
     console.log(root.components);
 }
