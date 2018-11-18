@@ -187,12 +187,13 @@ export function findPort(component, id) {
 export function mergeComponents(state, selectedComponents) {
     console.log('merge', selectedComponents);
 
+    let copiedComponents = JSON.parse(JSON.stringify(selectedComponents));
     let newComponent = {
         id: 4,
         type: 'COMPOSITE',
         x: 550,
         y: 10,
-        components: selectedComponents,
+        components: copiedComponents,
         wires: [],
         ports: [],
         values: []
@@ -204,32 +205,14 @@ export function mergeComponents(state, selectedComponents) {
     console.log(ids);
     let idSet = new Set(ids);
 
-    root.wires.map(w => {
-        return;
-        if (idSet.has(w.from.component)) {
-            let component = findComponent(root, w.from.component);
-            let port = Object.assign({}, findPort(component, w.from.port));
-
-            if (!findPort(newComponent, w.from.port)) {
-                newComponent.ports.push(port);
-
-                newComponent.wires.push({
-                    from: {
-                        component: w.from.component, // FIXME find component
-                        port: w.from.port,
-                    },
-                    to: {
-                        // no component id (external port)
-                        port: port.id
-                    }
-                });
-            }
-
-            w.from.component = newComponent.id;
+    // copy wires between selected components
+    root.wires.forEach(w => {
+        if (idSet.has(w.from.component) && idSet.has(w.to.component)) {
+            newComponent.wires.push(w);
         }
     });
 
-    root.wires.map(w => {
+    root.wires.forEach(w => {
         return;
         if (idSet.has(w.to.component)) {
             let component = findComponent(root, w.to.component);

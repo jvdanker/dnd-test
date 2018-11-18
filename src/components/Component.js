@@ -34,7 +34,7 @@ class Component extends React.Component {
 
             case 'COMPOSITE':
                 return (
-                    <g>
+                    <g transform={"translate(500, 10)"}>
                         <Wires
                             wires={component.wires}
                             components={component.components}
