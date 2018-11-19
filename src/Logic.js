@@ -96,89 +96,88 @@ export function sanitize(data) {
     return data;
 }
 
-function addComponent(id) {
-    const components = this.state.components;
-    var max = 0;
-    Object.keys(components).forEach(i => {
-        const c = this.state.components[i];
-        if (c.id > max) {
-            max = c.id;
-        }
-    });
+// function addComponent(id) {
+//     const components = this.state.components;
+//     var max = 0;
+//     Object.keys(components).forEach(i => {
+//         const c = this.state.components[i];
+//         if (c.id > max) {
+//             max = c.id;
+//         }
+//     });
+//
+//     const c = JSON.parse(JSON.stringify(this.state.library[id]));
+//     c.x = 500;
+//     c.connectors[0].x = 510;
+//     c.connectors[1].x = 540;
+//     components[max+1] = c;
+//     this.setState({
+//         components: components
+//     });
+// }
 
-    const c = JSON.parse(JSON.stringify(this.state.library[id]));
-    c.x = 500;
-    c.connectors[0].x = 510;
-    c.connectors[1].x = 540;
-    components[max+1] = c;
-    this.setState({
-        components: components
-    });
-}
+// function selectPort(component, port) {
+//     port.selected = !port.selected;
+//
+//     var selectedPorts = this.state.selectedPorts;
+//     if (port.selected) {
+//         selectedPorts.push({
+//             component: component,
+//             port: port
+//         });
+//     } else {
+//         // TODO remove from array
+//     }
+//
+//     var components = this.state.components;
+//     var wires = this.state.wires;
+//     if (selectedPorts.length === 2) {
+//         var from = components[selectedPorts[0].component];
+//         var fromConnector = from.connectors.find((e) => {
+//             return e.id === selectedPorts[0].port.id;
+//         });
+//
+//         wires.push({
+//             from: {
+//                 component: selectedPorts[0].component,
+//                 port: selectedPorts[0].port.id
+//             },
+//             to: {
+//                 component: selectedPorts[1].component,
+//                 port: selectedPorts[1].port.id
+//             }
+//         });
+//
+//         selectedPorts = [];
+//         fromConnector.selected = false;
+//         port.selected = false;
+//     }
+//
+//     this.setState({
+//         wires: wires,
+//         selectedPorts: selectedPorts,
+//         components: components
+//     });
+// }
 
-function selectPort(component, port) {
-    port.selected = !port.selected;
-
-    var selectedPorts = this.state.selectedPorts;
-    if (port.selected) {
-        selectedPorts.push({
-            component: component,
-            port: port
-        });
-    } else {
-        // TODO remove from array
-    }
-
-    var components = this.state.components;
-    var wires = this.state.wires;
-    if (selectedPorts.length === 2) {
-        var from = components[selectedPorts[0].component];
-        var fromConnector = from.connectors.find((e) => {
-            return e.id === selectedPorts[0].port.id;
-        });
-
-        wires.push({
-            from: {
-                component: selectedPorts[0].component,
-                port: selectedPorts[0].port.id
-            },
-            to: {
-                component: selectedPorts[1].component,
-                port: selectedPorts[1].port.id
-            }
-        });
-
-        selectedPorts = [];
-        fromConnector.selected = false;
-        port.selected = false;
-    }
-
-    this.setState({
-        wires: wires,
-        selectedPorts: selectedPorts,
-        components: components
-    });
-}
-
-
-export function findComponent(root, id) {
-    if (root.id === id) {
-        return root;
-    }
-
-    if (typeof root.components === 'undefined') {
-        return -1;
-    }
-
-    for (let i=0; i<root.components.length; i++) {
-        const c = findComponent(root.components[i], id);
-        if (c !== -1) {
-            return c;
-        }
-    }
-
-    return -1;
-}
+// export function findComponent(root, id) {
+//     if (root.id === id) {
+//         return root;
+//     }
+//
+//     if (typeof root.components === 'undefined') {
+//         return -1;
+//     }
+//
+//     for (let i=0; i<root.components.length; i++) {
+//         const c = findComponent(root.components[i], id);
+//         if (c !== -1) {
+//             return c;
+//         }
+//     }
+//
+//     return -1;
+// }
 
 export function findPort(component, id) {
     return component.ports.filter(p => p.id === id)[0];
@@ -188,6 +187,14 @@ export function mergeComponents(state, selectedComponents) {
     console.log('merge', selectedComponents);
 
     let copiedComponents = JSON.parse(JSON.stringify(selectedComponents));
+    let min = copiedComponents.reduce((a, c) => a === -1 ? c.x : c.x < a.x ? c.x : a.x, -1);
+    console.log('min = ', min);
+
+    copiedComponents = copiedComponents.map(c => {
+        c.x -= min;
+        return c;
+    });
+
     let newComponent = {
         id: 4,
         type: 'COMPOSITE',
@@ -272,6 +279,9 @@ export function mergeComponents(state, selectedComponents) {
     });
 
     console.log('newComponent=', newComponent);
+
+    // remove merged components
+    root.components = root.components.filter(c => !idSet.has(c.id));
 
     // root.components = root.components.filter(c => !idSet.has(c.id));
     root.components.push(newComponent);

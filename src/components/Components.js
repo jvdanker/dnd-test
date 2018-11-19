@@ -1,6 +1,5 @@
 import React from 'react';
 
-import VisibleComponent from "../containers/VisibleComponent";
 import Component from "../components/Component";
 
 class Components extends React.Component {

@@ -26,7 +26,7 @@ const components = (state = data, action) => {
         }
 
         case types.MOVE_COMPONENT: {
-            var c = findComponent(components[0], action.id);
+            let c = findComponent(components[0], action.id);
             if (c !== -1) {
                 c.x = action.x;
                 c.y = action.y;
@@ -36,7 +36,7 @@ const components = (state = data, action) => {
         }
 
         case types.SELECT_COMPONENT: {
-            var c = findComponent(components[0], action.id);
+            let c = findComponent(components[0], action.id);
             if (c !== -1) {
                 c.selected = !c.selected;
 

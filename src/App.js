@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
-import VisibleComponents from './containers/VisibleComponents';
-import VisibleComponent from './containers/VisibleComponent';
 import RootComponent from './containers/RootComponent';
 import ActionsComponent from './containers/ActionsComponent';
 

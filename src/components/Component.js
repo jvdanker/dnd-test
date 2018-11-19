@@ -2,7 +2,6 @@ import React from 'react';
 
 import Wires from '../components/Wires';
 import Components from '../components/Components';
-import VisibleComponents from '../containers/VisibleComponents';
 import Node from './Node';
 import Switch from '../components/Switch';
 
@@ -15,6 +14,7 @@ class Component extends React.Component {
 
         // TODO render wires
         switch (component.type) {
+            case 'COMPOSITE':
             case 'ROOT':
                 return (
                     <g>
@@ -22,6 +22,7 @@ class Component extends React.Component {
                             wires={component.wires}
                             components={component.components}
                             ports={component.ports}
+                            component={component}
                         />
                         <Components
                             component={component}
@@ -32,7 +33,7 @@ class Component extends React.Component {
                     </g>
                 );
 
-            case 'COMPOSITE':
+            case 'aCOMPOSITE':
                 return (
                     <g transform={"translate(500, 10)"}>
                         <Wires

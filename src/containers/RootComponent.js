@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/index'
 import Component from '../components/Component';
-import {sanitize} from "../Logic";
 
 const mapStateToProps = (state, ownProps) => {
     return {
