@@ -212,7 +212,7 @@ export function mergeComponents(state, selectedComponents) {
         }
     });
 
-    // collect all ports in this new component
+    // collect all ports of this new component
     let allPorts = newComponent.components.map(c => {
         let ports = c.ports.map(p => p.id);
         return {
@@ -222,45 +222,53 @@ export function mergeComponents(state, selectedComponents) {
     });
     console.log('allPorts', allPorts);
 
-    // TODO filter wired ports
-    allPorts = allPorts.filter(p => {
-        let wire = root.wires.filter(w => {
-            return (w.from.component === p.component && p.ports.includes(w.from.port))
-                || (w.to.component === p.component && p.ports.includes(w.to.port));
-        });
-        console.log('wire', wire);
-        return wire.length !== 0;
-    });
-    console.log('filtered allPorts', allPorts);
-
-    // TODO create new external ports
-
-    // TODO connect external ports to external components
-
-    root.wires.forEach(w => {
-        return;
+    // rewire to new component
+    root.wires = root.wires.map(w => {
         if (idSet.has(w.to.component)) {
-            let component = findComponent(root, w.to.component);
-            // TODO generate new destination port id, could collide with existing ids
-            let port = Object.assign({}, findPort(component, w.to.port));
+            newComponent.ports.push({
+                id: w.to.port,
+                type: 'INPUT',
+                x: 10,
+                y: 90
+            });
 
-            if (!findPort(newComponent, w.to.port)) {
-                newComponent.ports.push(port);
+            newComponent.wires.push({
+                from: {
+                    port: w.to.port
+                },
+                to: {
+                    component: w.to.component,
+                    port: w.to.port
+                }
+            });
+
+            w.to.component = 4;
+        }
+
+        if (idSet.has(w.from.component)) {
+            if (!findPort(newComponent, w.from.port)) {
+                newComponent.ports.push({
+                    id: w.from.port,
+                    type: 'OUTPUT',
+                    x: 10,
+                    y: 90
+                });
 
                 newComponent.wires.push({
                     from: {
-                        // no component id (external port)
-                        port: port.id
+                        component: w.from.component,
+                        port: w.from.port
                     },
                     to: {
-                        component: w.to.component, // FIXME find component
-                        port: w.to.port
+                        port: w.from.port
                     }
                 });
             }
 
-            w.to.component = newComponent.id;
+            w.from.component = 4;
         }
+
+        return w;
     });
 
     console.log('newComponent=', newComponent);
