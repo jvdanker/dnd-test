@@ -15,6 +15,22 @@ class Component extends React.Component {
         // TODO render wires
         switch (component.type) {
             case 'COMPOSITE':
+                return (
+                    <g>
+                        <Node
+                            id={component.id}
+                            x={component.x}
+                            y={component.y}
+                            ports={component.ports}
+                            values={component.values}
+                            onMove={this.props.onMove}
+                            onSelectComponent={this.props.onSelectComponent}
+                            selectPort={this.props.selectPort}
+                            selected={component.selected}
+                        />
+                    </g>
+                );
+
             case 'ROOT':
                 return (
                     <g>
