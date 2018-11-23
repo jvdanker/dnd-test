@@ -187,11 +187,12 @@ export function mergeComponents(state, selectedComponents) {
     console.log('merge', selectedComponents);
 
     let copiedComponents = JSON.parse(JSON.stringify(selectedComponents));
-    let min = copiedComponents.reduce((a, c) => a === -1 ? c.x : c.x < a.x ? c.x : a.x, -1);
-    console.log('min = ', min);
+    let minX = copiedComponents.reduce((a, c) => a === -1 ? c.x : c.x < a.x ? c.x : a.x, -1);
+    let minY = copiedComponents.reduce((a, c) => a === -1 ? c.y : c.y < a.y ? c.y : a.y, -1);
 
     copiedComponents = copiedComponents.map(c => {
-        c.x -= min;
+        c.x -= minX;
+        c.y -= minY;
         return c;
     });
 
@@ -230,14 +231,16 @@ export function mergeComponents(state, selectedComponents) {
     console.log('allPorts', allPorts);
 
     // rewire to new component
+    let x = 10;
     root.wires = root.wires.map(w => {
         if (idSet.has(w.to.component)) {
             newComponent.ports.push({
                 id: w.to.port,
                 type: 'INPUT',
-                x: 10,
+                x: x,
                 y: 90
             });
+            x+= 30;
 
             newComponent.wires.push({
                 from: {
@@ -277,6 +280,8 @@ export function mergeComponents(state, selectedComponents) {
 
         return w;
     });
+
+    // FIXME not connected 'external' ports aren't added as a port to the composite
 
     console.log('newComponent=', newComponent);
 

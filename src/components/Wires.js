@@ -20,7 +20,7 @@ class Wires extends React.Component {
             let toC = to.ports.find(p => p.id === w.to.port);
 
             return (
-                <g>
+                <g key={w.from.component + '-' + w.from.port + ':' + w.to.component + '-' + w.to.port}>
                     <line
                         key={w.from.component + '-' + w.from.port + ':' + w.to.component + '-' + w.to.port}
                         x1={from.x + fromC.x} y1={from.y + fromC.y}
