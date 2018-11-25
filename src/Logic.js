@@ -184,7 +184,7 @@ export function findPort(component, id) {
 }
 
 export function mergeComponents(state, selectedComponents) {
-    console.log('merge', selectedComponents);
+    console.log('merge', state, selectedComponents);
 
     let copiedComponents = JSON.parse(JSON.stringify(selectedComponents));
     let minX = copiedComponents.reduce((a, c) => a === -1 ? c.x : c.x < a.x ? c.x : a.x, -1);
@@ -231,7 +231,7 @@ export function mergeComponents(state, selectedComponents) {
     console.log('allPorts', allPorts);
 
     // rewire to new component
-    let x = 10;
+    let x = 10, x2 = 10;
     root.wires = root.wires.map(w => {
         if (idSet.has(w.to.component)) {
             newComponent.ports.push({
@@ -240,7 +240,7 @@ export function mergeComponents(state, selectedComponents) {
                 x: x,
                 y: 90
             });
-            x+= 30;
+            x += 30;
 
             newComponent.wires.push({
                 from: {
@@ -260,9 +260,10 @@ export function mergeComponents(state, selectedComponents) {
                 newComponent.ports.push({
                     id: w.from.port,
                     type: 'OUTPUT',
-                    x: 10,
-                    y: 90
+                    x: x2,
+                    y: 0
                 });
+                x2 += 30;
 
                 newComponent.wires.push({
                     from: {
@@ -291,6 +292,8 @@ export function mergeComponents(state, selectedComponents) {
     // root.components = root.components.filter(c => !idSet.has(c.id));
     root.components.push(newComponent);
     console.log(root.components);
+
+    state.selectedComponents = [];
 }
 
 export default updateModel;
