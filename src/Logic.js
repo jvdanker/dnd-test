@@ -210,7 +210,7 @@ export function mergeComponents(state, selectedComponents) {
     let root = state.components[0];
 
     let ids = selectedComponents.map(c => c.id);
-    console.log(ids);
+    console.log('ids', ids);
     let idSet = new Set(ids);
 
     // copy wires between selected components
@@ -221,6 +221,7 @@ export function mergeComponents(state, selectedComponents) {
     });
 
     // collect all ports of this new component
+    console.log('newComponent', newComponent);
     let allPorts = newComponent.components.map(c => {
         let ports = c.ports.map(p => p.id);
         return {
@@ -229,6 +230,22 @@ export function mergeComponents(state, selectedComponents) {
         };
     });
     console.log('allPorts', allPorts);
+
+    let ports = newComponent.components
+        .map(c => { return {componentId: c.id, ports: c.ports} })
+        .map(c => { return c.ports.map(p => { return {component: c.componentId, port: p} }) })
+        .reduce((a, c) => a.concat(c));
+    console.log('ports', ports);
+
+    // find unmapped ports
+    let unmappedPorts = allPorts.filter(p => {
+        let w = newComponent.wires.find(w => {
+            console.log('unmapped', w, p);
+            return w.component === p.component && w.port === p.port;
+        });
+        return w === undefined;
+    });
+    console.log('unmappedPorts', unmappedPorts);
 
     // rewire to new component
     let x = 10, x2 = 10;
