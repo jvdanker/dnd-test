@@ -233,16 +233,18 @@ export function mergeComponents(state, selectedComponents) {
 
     let ports = newComponent.components
         .map(c => { return {componentId: c.id, ports: c.ports} })
-        .map(c => { return c.ports.map(p => { return {component: c.componentId, port: p} }) })
+        .map(c => { return c.ports.map(p => { return {componentId: c.componentId, port: p} }) })
         .reduce((a, c) => a.concat(c));
     console.log('ports', ports);
 
     // find unmapped ports
-    let unmappedPorts = allPorts.filter(p => {
+    let unmappedPorts = ports.filter(p => {
+        console.log(p, newComponent.wires);
         let w = newComponent.wires.find(w => {
             console.log('unmapped', w, p);
-            return w.component === p.component && w.port === p.port;
+            return w.component === p.componentId && w.port === p.port.id;
         });
+        console.log(w);
         return w === undefined;
     });
     console.log('unmappedPorts', unmappedPorts);
